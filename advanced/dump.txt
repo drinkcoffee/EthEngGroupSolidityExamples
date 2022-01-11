@@ -1,0 +1,441 @@
+PC: 0x0, opcode: PUSH1 0x80
+ PC: 0x2, opcode: PUSH1 0x40
+ PC: 0x4, opcode: MSTORE
+ PC: 0x5, opcode: CALLVALUE
+ PC: 0x6, opcode: DUP1
+ PC: 0x7, opcode: ISZERO
+ PC: 0x8, opcode: PUSH2 0x0010
+ PC: 0xb, opcode: JUMPI
+ PC: 0xc, opcode: PUSH1 0x00
+ PC: 0xe, opcode: DUP1
+ PC: 0xf, opcode: REVERT
+ 
+ PC: 0x10, opcode: JUMPDEST
+ PC: 0x11, opcode: POP
+ PC: 0x12, opcode: PUSH1 0x0b
+ PC: 0x14, opcode: PUSH1 0x00
+ PC: 0x16, opcode: DUP2
+ PC: 0x17, opcode: SWAP1
+ PC: 0x18, opcode: SSTORE
+ PC: 0x19, opcode: POP
+ PC: 0x1a, opcode: PUSH1 0x0c
+ PC: 0x1c, opcode: PUSH1 0x01
+ PC: 0x1e, opcode: DUP2
+ PC: 0x1f, opcode: SWAP1
+ PC: 0x20, opcode: SSTORE
+ PC: 0x21, opcode: POP
+ PC: 0x22, opcode: PUSH1 0x0d
+ PC: 0x24, opcode: PUSH1 0x02
+ PC: 0x26, opcode: DUP2
+ PC: 0x27, opcode: SWAP1
+ PC: 0x28, opcode: SSTORE
+ PC: 0x29, opcode: POP
+ PC: 0x2a, opcode: PUSH1 0x15
+ PC: 0x2c, opcode: PUSH1 0x03
+ PC: 0x2e, opcode: DUP2
+ PC: 0x2f, opcode: SWAP1
+ PC: 0x30, opcode: SSTORE
+ PC: 0x31, opcode: POP
+ PC: 0x32, opcode: PUSH1 0x16
+ PC: 0x34, opcode: PUSH1 0x04
+ PC: 0x36, opcode: DUP2
+ PC: 0x37, opcode: SWAP1
+ PC: 0x38, opcode: SSTORE
+ PC: 0x39, opcode: POP
+ PC: 0x3a, opcode: PUSH1 0x17
+ PC: 0x3c, opcode: PUSH1 0x05
+ PC: 0x3e, opcode: DUP2
+ PC: 0x3f, opcode: SWAP1
+ PC: 0x40, opcode: SSTORE
+ PC: 0x41, opcode: POP
+ PC: 0x42, opcode: PUSH1 0x1f
+ PC: 0x44, opcode: PUSH1 0x06
+ PC: 0x46, opcode: DUP2
+ PC: 0x47, opcode: SWAP1
+ PC: 0x48, opcode: SSTORE
+ PC: 0x49, opcode: POP
+ PC: 0x4a, opcode: PUSH1 0x20
+ PC: 0x4c, opcode: PUSH1 0x07
+ PC: 0x4e, opcode: DUP2
+ PC: 0x4f, opcode: SWAP1
+ PC: 0x50, opcode: SSTORE
+ PC: 0x51, opcode: POP
+ PC: 0x52, opcode: PUSH1 0x21
+ PC: 0x54, opcode: PUSH1 0x08
+ PC: 0x56, opcode: DUP2
+ PC: 0x57, opcode: SWAP1
+ PC: 0x58, opcode: SSTORE
+ PC: 0x59, opcode: POP
+ PC: 0x5a, opcode: PUSH2 0x0245
+ PC: 0x5d, opcode: DUP1
+ PC: 0x5e, opcode: PUSH2 0x0068
+ PC: 0x61, opcode: PUSH1 0x00
+ PC: 0x63, opcode: CODECOPY
+ PC: 0x64, opcode: PUSH1 0x00
+ PC: 0x66, opcode: RETURN
+ PC: 0x67, opcode: INVALID
+ PC: 0x68, opcode: PUSH1 0x80
+ PC: 0x6a, opcode: PUSH1 0x40
+ PC: 0x6c, opcode: MSTORE
+ PC: 0x6d, opcode: CALLVALUE
+ PC: 0x6e, opcode: DUP1
+ PC: 0x6f, opcode: ISZERO
+ PC: 0x70, opcode: PUSH2 0x0010
+ PC: 0x73, opcode: JUMPI
+ PC: 0x74, opcode: PUSH1 0x00
+ PC: 0x76, opcode: DUP1
+ PC: 0x77, opcode: REVERT
+ PC: 0x78, opcode: JUMPDEST
+ PC: 0x79, opcode: POP
+ PC: 0x7a, opcode: PUSH1 0x04
+ PC: 0x7c, opcode: CALLDATASIZE
+ PC: 0x7d, opcode: LT
+ PC: 0x7e, opcode: PUSH2 0x0092
+ PC: 0x81, opcode: JUMPI
+ PC: 0x82, opcode: PUSH1 0x00
+ PC: 0x84, opcode: CALLDATALOAD
+ PC: 0x85, opcode: PUSH1 0xe0
+ PC: 0x87, opcode: SHR
+ PC: 0x88, opcode: DUP1
+ PC: 0x89, opcode: PUSH4 0x95cacbe0
+ PC: 0x8e, opcode: GT
+ PC: 0x8f, opcode: PUSH2 0x0066
+ PC: 0x92, opcode: JUMPI
+ PC: 0x93, opcode: DUP1
+ PC: 0x94, opcode: PUSH4 0x95cacbe0
+ PC: 0x99, opcode: EQ
+ PC: 0x9a, opcode: PUSH2 0x010f
+ PC: 0x9d, opcode: JUMPI
+ PC: 0x9e, opcode: DUP1
+ PC: 0x9f, opcode: PUSH4 0x9ce5b115
+ PC: 0xa4, opcode: EQ
+ PC: 0xa5, opcode: PUSH2 0x012d
+ PC: 0xa8, opcode: JUMPI
+ PC: 0xa9, opcode: DUP1
+ PC: 0xaa, opcode: PUSH4 0xbd094948
+ PC: 0xaf, opcode: EQ
+ PC: 0xb0, opcode: PUSH2 0x014b
+ PC: 0xb3, opcode: JUMPI
+ PC: 0xb4, opcode: DUP1
+ PC: 0xb5, opcode: PUSH4 0xbf9e206d
+ PC: 0xba, opcode: EQ
+ PC: 0xbb, opcode: PUSH2 0x0169
+ PC: 0xbe, opcode: JUMPI
+ PC: 0xbf, opcode: DUP1
+ PC: 0xc0, opcode: PUSH4 0xc82fdf36
+ PC: 0xc5, opcode: EQ
+ PC: 0xc6, opcode: PUSH2 0x0187
+ PC: 0xc9, opcode: JUMPI
+ PC: 0xca, opcode: PUSH2 0x0092
+ PC: 0xcd, opcode: JUMP
+ PC: 0xce, opcode: JUMPDEST
+ PC: 0xcf, opcode: DUP1
+ PC: 0xd0, opcode: PUSH3 0x80c5b8
+ PC: 0xd4, opcode: EQ
+ PC: 0xd5, opcode: PUSH2 0x0097
+ PC: 0xd8, opcode: JUMPI
+ PC: 0xd9, opcode: DUP1
+ PC: 0xda, opcode: PUSH4 0x0142b750
+ PC: 0xdf, opcode: EQ
+ PC: 0xe0, opcode: PUSH2 0x00b5
+ PC: 0xe3, opcode: JUMPI
+ PC: 0xe4, opcode: DUP1
+ PC: 0xe5, opcode: PUSH4 0x15229d53
+ PC: 0xea, opcode: EQ
+ PC: 0xeb, opcode: PUSH2 0x00d3
+ PC: 0xee, opcode: JUMPI
+ PC: 0xef, opcode: DUP1
+ PC: 0xf0, opcode: PUSH4 0x609e6586
+ PC: 0xf5, opcode: EQ
+ PC: 0xf6, opcode: PUSH2 0x00f1
+ PC: 0xf9, opcode: JUMPI
+ PC: 0xfa, opcode: JUMPDEST
+ PC: 0xfb, opcode: PUSH1 0x00
+ PC: 0xfd, opcode: DUP1
+ PC: 0xfe, opcode: REVERT
+ PC: 0xff, opcode: JUMPDEST
+ PC: 0x100, opcode: PUSH2 0x009f
+ PC: 0x103, opcode: PUSH2 0x01a5
+ PC: 0x106, opcode: JUMP
+ PC: 0x107, opcode: JUMPDEST
+ PC: 0x108, opcode: PUSH1 0x40
+ PC: 0x10a, opcode: MLOAD
+ PC: 0x10b, opcode: PUSH2 0x00ac
+ PC: 0x10e, opcode: SWAP2
+ PC: 0x10f, opcode: SWAP1
+ PC: 0x110, opcode: PUSH2 0x01f4
+ PC: 0x113, opcode: JUMP
+ PC: 0x114, opcode: JUMPDEST
+ PC: 0x115, opcode: PUSH1 0x40
+ PC: 0x117, opcode: MLOAD
+ PC: 0x118, opcode: DUP1
+ PC: 0x119, opcode: SWAP2
+ PC: 0x11a, opcode: SUB
+ PC: 0x11b, opcode: SWAP1
+ PC: 0x11c, opcode: RETURN
+ PC: 0x11d, opcode: JUMPDEST
+ PC: 0x11e, opcode: PUSH2 0x00bd
+ PC: 0x121, opcode: PUSH2 0x01ab
+ PC: 0x124, opcode: JUMP
+ PC: 0x125, opcode: JUMPDEST
+ PC: 0x126, opcode: PUSH1 0x40
+ PC: 0x128, opcode: MLOAD
+ PC: 0x129, opcode: PUSH2 0x00ca
+ PC: 0x12c, opcode: SWAP2
+ PC: 0x12d, opcode: SWAP1
+ PC: 0x12e, opcode: PUSH2 0x01f4
+ PC: 0x131, opcode: JUMP
+ PC: 0x132, opcode: JUMPDEST
+ PC: 0x133, opcode: PUSH1 0x40
+ PC: 0x135, opcode: MLOAD
+ PC: 0x136, opcode: DUP1
+ PC: 0x137, opcode: SWAP2
+ PC: 0x138, opcode: SUB
+ PC: 0x139, opcode: SWAP1
+ PC: 0x13a, opcode: RETURN
+ PC: 0x13b, opcode: JUMPDEST
+ PC: 0x13c, opcode: PUSH2 0x00db
+ PC: 0x13f, opcode: PUSH2 0x01b1
+ PC: 0x142, opcode: JUMP
+ PC: 0x143, opcode: JUMPDEST
+ PC: 0x144, opcode: PUSH1 0x40
+ PC: 0x146, opcode: MLOAD
+ PC: 0x147, opcode: PUSH2 0x00e8
+ PC: 0x14a, opcode: SWAP2
+ PC: 0x14b, opcode: SWAP1
+ PC: 0x14c, opcode: PUSH2 0x01f4
+ PC: 0x14f, opcode: JUMP
+ PC: 0x150, opcode: JUMPDEST
+ PC: 0x151, opcode: PUSH1 0x40
+ PC: 0x153, opcode: MLOAD
+ PC: 0x154, opcode: DUP1
+ PC: 0x155, opcode: SWAP2
+ PC: 0x156, opcode: SUB
+ PC: 0x157, opcode: SWAP1
+ PC: 0x158, opcode: RETURN
+ PC: 0x159, opcode: JUMPDEST
+ PC: 0x15a, opcode: PUSH2 0x00f9
+ PC: 0x15d, opcode: PUSH2 0x01b7
+ PC: 0x160, opcode: JUMP
+ PC: 0x161, opcode: JUMPDEST
+ PC: 0x162, opcode: PUSH1 0x40
+ PC: 0x164, opcode: MLOAD
+ PC: 0x165, opcode: PUSH2 0x0106
+ PC: 0x168, opcode: SWAP2
+ PC: 0x169, opcode: SWAP1
+ PC: 0x16a, opcode: PUSH2 0x01f4
+ PC: 0x16d, opcode: JUMP
+ PC: 0x16e, opcode: JUMPDEST
+ PC: 0x16f, opcode: PUSH1 0x40
+ PC: 0x171, opcode: MLOAD
+ PC: 0x172, opcode: DUP1
+ PC: 0x173, opcode: SWAP2
+ PC: 0x174, opcode: SUB
+ PC: 0x175, opcode: SWAP1
+ PC: 0x176, opcode: RETURN
+ PC: 0x177, opcode: JUMPDEST
+ PC: 0x178, opcode: PUSH2 0x0117
+ PC: 0x17b, opcode: PUSH2 0x01bd
+ PC: 0x17e, opcode: JUMP
+ PC: 0x17f, opcode: JUMPDEST
+ PC: 0x180, opcode: PUSH1 0x40
+ PC: 0x182, opcode: MLOAD
+ PC: 0x183, opcode: PUSH2 0x0124
+ PC: 0x186, opcode: SWAP2
+ PC: 0x187, opcode: SWAP1
+ PC: 0x188, opcode: PUSH2 0x01f4
+ PC: 0x18b, opcode: JUMP
+ PC: 0x18c, opcode: JUMPDEST
+ PC: 0x18d, opcode: PUSH1 0x40
+ PC: 0x18f, opcode: MLOAD
+ PC: 0x190, opcode: DUP1
+ PC: 0x191, opcode: SWAP2
+ PC: 0x192, opcode: SUB
+ PC: 0x193, opcode: SWAP1
+ PC: 0x194, opcode: RETURN
+ PC: 0x195, opcode: JUMPDEST
+ PC: 0x196, opcode: PUSH2 0x0135
+ PC: 0x199, opcode: PUSH2 0x01c3
+ PC: 0x19c, opcode: JUMP
+ PC: 0x19d, opcode: JUMPDEST
+ PC: 0x19e, opcode: PUSH1 0x40
+ PC: 0x1a0, opcode: MLOAD
+ PC: 0x1a1, opcode: PUSH2 0x0142
+ PC: 0x1a4, opcode: SWAP2
+ PC: 0x1a5, opcode: SWAP1
+ PC: 0x1a6, opcode: PUSH2 0x01f4
+ PC: 0x1a9, opcode: JUMP
+ PC: 0x1aa, opcode: JUMPDEST
+ PC: 0x1ab, opcode: PUSH1 0x40
+ PC: 0x1ad, opcode: MLOAD
+ PC: 0x1ae, opcode: DUP1
+ PC: 0x1af, opcode: SWAP2
+ PC: 0x1b0, opcode: SUB
+ PC: 0x1b1, opcode: SWAP1
+ PC: 0x1b2, opcode: RETURN
+ PC: 0x1b3, opcode: JUMPDEST
+ PC: 0x1b4, opcode: PUSH2 0x0153
+ PC: 0x1b7, opcode: PUSH2 0x01c9
+ PC: 0x1ba, opcode: JUMP
+ PC: 0x1bb, opcode: JUMPDEST
+ PC: 0x1bc, opcode: PUSH1 0x40
+ PC: 0x1be, opcode: MLOAD
+ PC: 0x1bf, opcode: PUSH2 0x0160
+ PC: 0x1c2, opcode: SWAP2
+ PC: 0x1c3, opcode: SWAP1
+ PC: 0x1c4, opcode: PUSH2 0x01f4
+ PC: 0x1c7, opcode: JUMP
+ PC: 0x1c8, opcode: JUMPDEST
+ PC: 0x1c9, opcode: PUSH1 0x40
+ PC: 0x1cb, opcode: MLOAD
+ PC: 0x1cc, opcode: DUP1
+ PC: 0x1cd, opcode: SWAP2
+ PC: 0x1ce, opcode: SUB
+ PC: 0x1cf, opcode: SWAP1
+ PC: 0x1d0, opcode: RETURN
+ PC: 0x1d1, opcode: JUMPDEST
+ PC: 0x1d2, opcode: PUSH2 0x0171
+ PC: 0x1d5, opcode: PUSH2 0x01cf
+ PC: 0x1d8, opcode: JUMP
+ PC: 0x1d9, opcode: JUMPDEST
+ PC: 0x1da, opcode: PUSH1 0x40
+ PC: 0x1dc, opcode: MLOAD
+ PC: 0x1dd, opcode: PUSH2 0x017e
+ PC: 0x1e0, opcode: SWAP2
+ PC: 0x1e1, opcode: SWAP1
+ PC: 0x1e2, opcode: PUSH2 0x01f4
+ PC: 0x1e5, opcode: JUMP
+ PC: 0x1e6, opcode: JUMPDEST
+ PC: 0x1e7, opcode: PUSH1 0x40
+ PC: 0x1e9, opcode: MLOAD
+ PC: 0x1ea, opcode: DUP1
+ PC: 0x1eb, opcode: SWAP2
+ PC: 0x1ec, opcode: SUB
+ PC: 0x1ed, opcode: SWAP1
+ PC: 0x1ee, opcode: RETURN
+ PC: 0x1ef, opcode: JUMPDEST
+ PC: 0x1f0, opcode: PUSH2 0x018f
+ PC: 0x1f3, opcode: PUSH2 0x01d5
+ PC: 0x1f6, opcode: JUMP
+ PC: 0x1f7, opcode: JUMPDEST
+ PC: 0x1f8, opcode: PUSH1 0x40
+ PC: 0x1fa, opcode: MLOAD
+ PC: 0x1fb, opcode: PUSH2 0x019c
+ PC: 0x1fe, opcode: SWAP2
+ PC: 0x1ff, opcode: SWAP1
+ PC: 0x200, opcode: PUSH2 0x01f4
+ PC: 0x203, opcode: JUMP
+ PC: 0x204, opcode: JUMPDEST
+ PC: 0x205, opcode: PUSH1 0x40
+ PC: 0x207, opcode: MLOAD
+ PC: 0x208, opcode: DUP1
+ PC: 0x209, opcode: SWAP2
+ PC: 0x20a, opcode: SUB
+ PC: 0x20b, opcode: SWAP1
+ PC: 0x20c, opcode: RETURN
+ PC: 0x20d, opcode: JUMPDEST
+ PC: 0x20e, opcode: PUSH1 0x04
+ PC: 0x210, opcode: SLOAD
+ PC: 0x211, opcode: DUP2
+ PC: 0x212, opcode: JUMP
+ PC: 0x213, opcode: JUMPDEST
+ PC: 0x214, opcode: PUSH1 0x06
+ PC: 0x216, opcode: SLOAD
+ PC: 0x217, opcode: DUP2
+ PC: 0x218, opcode: JUMP
+ PC: 0x219, opcode: JUMPDEST
+ PC: 0x21a, opcode: PUSH1 0x07
+ PC: 0x21c, opcode: SLOAD
+ PC: 0x21d, opcode: DUP2
+ PC: 0x21e, opcode: JUMP
+ PC: 0x21f, opcode: JUMPDEST
+ PC: 0x220, opcode: PUSH1 0x08
+ PC: 0x222, opcode: SLOAD
+ PC: 0x223, opcode: DUP2
+ PC: 0x224, opcode: JUMP
+ PC: 0x225, opcode: JUMPDEST
+ PC: 0x226, opcode: PUSH1 0x01
+ PC: 0x228, opcode: SLOAD
+ PC: 0x229, opcode: DUP2
+ PC: 0x22a, opcode: JUMP
+ PC: 0x22b, opcode: JUMPDEST
+ PC: 0x22c, opcode: PUSH1 0x03
+ PC: 0x22e, opcode: SLOAD
+ PC: 0x22f, opcode: DUP2
+ PC: 0x230, opcode: JUMP
+ PC: 0x231, opcode: JUMPDEST
+ PC: 0x232, opcode: PUSH1 0x05
+ PC: 0x234, opcode: SLOAD
+ PC: 0x235, opcode: DUP2
+ PC: 0x236, opcode: JUMP
+ PC: 0x237, opcode: JUMPDEST
+ PC: 0x238, opcode: PUSH1 0x02
+ PC: 0x23a, opcode: SLOAD
+ PC: 0x23b, opcode: DUP2
+ PC: 0x23c, opcode: JUMP
+ PC: 0x23d, opcode: JUMPDEST
+ PC: 0x23e, opcode: PUSH1 0x00
+ PC: 0x240, opcode: SLOAD
+ PC: 0x241, opcode: DUP2
+ PC: 0x242, opcode: JUMP
+ PC: 0x243, opcode: JUMPDEST
+ PC: 0x244, opcode: PUSH1 0x00
+ PC: 0x246, opcode: DUP2
+ PC: 0x247, opcode: SWAP1
+ PC: 0x248, opcode: POP
+ PC: 0x249, opcode: SWAP2
+ PC: 0x24a, opcode: SWAP1
+ PC: 0x24b, opcode: POP
+ PC: 0x24c, opcode: JUMP
+ PC: 0x24d, opcode: JUMPDEST
+ PC: 0x24e, opcode: PUSH2 0x01ee
+ PC: 0x251, opcode: DUP2
+ PC: 0x252, opcode: PUSH2 0x01db
+ PC: 0x255, opcode: JUMP
+ PC: 0x256, opcode: JUMPDEST
+ PC: 0x257, opcode: DUP3
+ PC: 0x258, opcode: MSTORE
+ PC: 0x259, opcode: POP
+ PC: 0x25a, opcode: POP
+ PC: 0x25b, opcode: JUMP
+ PC: 0x25c, opcode: JUMPDEST
+ PC: 0x25d, opcode: PUSH1 0x00
+ PC: 0x25f, opcode: PUSH1 0x20
+ PC: 0x261, opcode: DUP3
+ PC: 0x262, opcode: ADD
+ PC: 0x263, opcode: SWAP1
+ PC: 0x264, opcode: POP
+ PC: 0x265, opcode: PUSH2 0x0209
+ PC: 0x268, opcode: PUSH1 0x00
+ PC: 0x26a, opcode: DUP4
+ PC: 0x26b, opcode: ADD
+ PC: 0x26c, opcode: DUP5
+ PC: 0x26d, opcode: PUSH2 0x01e5
+ PC: 0x270, opcode: JUMP
+ PC: 0x271, opcode: JUMPDEST
+ PC: 0x272, opcode: SWAP3
+ PC: 0x273, opcode: SWAP2
+ PC: 0x274, opcode: POP
+ PC: 0x275, opcode: POP
+ PC: 0x276, opcode: JUMP
+ PC: 0x277, opcode: INVALID
+ PC: 0x278, opcode: LOG2
+ PC: 0x279, opcode: PUSH5 0x6970667358
+ PC: 0x27f, opcode: 22
+ PC: 0x280, opcode: SLT
+ PC: 0x281, opcode: SHA3
+ PC: 0x282, opcode: 5c
+ PC: 0x283, opcode: ffffffa8
+ PC: 0x284, opcode: CALLDATASIZE
+ PC: 0x285, opcode: PUSH27 0x13a3a00fd7479ae46c79a89eeff34317ff18e54adfd8f93c22a5fb
+ PC: 0x2a1, opcode: DUP13
+ PC: 0x2a2, opcode: PUSH5 0x736f6c6343
+ PC: 0x2a8, opcode: STOP
+ PC: 0x2a9, opcode: ADDMOD
+ PC: 0x2aa, opcode: MULMOD
+ PC: 0x2ab, opcode: STOP
+ PC: 0x2ac, opcode: CALLER
+
+BUILD SUCCESSFUL in 5s
+7 actionable tasks: 2 executed, 5 up-to-date
+1:46:31 pm: Task execution finished 'ByteCodeDump.main()'.
