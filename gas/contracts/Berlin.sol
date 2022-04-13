@@ -16,7 +16,16 @@ contract Berlin {
       // Will never happen. Forces this to be a transaction function.
       a1 = 3;
     }
+    dummy1();
   }
+  function dummy1() internal {
+    if (block.timestamp == 2) {
+      // Will never happen. Forces this to be a transaction function.
+      a1 = 3;
+    }
+  }
+
+
 
   function twoLoad() external {
     if (a1 == 2) {
@@ -27,7 +36,8 @@ contract Berlin {
   }
   function dummy2() internal {
     if (a1 == 2) {
-       revert("Bang!");
+      // Will never happen. Forces this to be a transaction function.
+      a1 = 3;
      }
   }
 
