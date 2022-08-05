@@ -15,4 +15,7 @@ contract StoreCompact {
         c = _c;
     }
 
+
+
 }
+
