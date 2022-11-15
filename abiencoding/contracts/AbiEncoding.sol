@@ -84,4 +84,17 @@ contract AbiEncoding {
         Lots memory l = Lots(address(this), bytes("abcde"), 0x123);
         emit LotsEvent(l);
     }
+
+    function transfer(address _to, uint256 _amount) public {
+        // Do stuff
+    }
+
+    function checkEncodeCall() external {
+        address to = address(msg.sender);
+        uint256 amount = 1234;
+        (bool success, bytes memory returnEncoded) =
+        address(this).call(abi.encodeCall(this.transfer, (to, amount)));
+        emit ResultInfo(success, returnEncoded);
+    }
+
 }
