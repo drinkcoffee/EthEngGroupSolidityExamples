@@ -113,7 +113,7 @@ contract FlashLoanV1 is PauseMeV1 {
         (bool success, bytes memory result) = _contract.call{value: _loanAmount}(_data);
         emit FlashCallResult(success, result);
 
-        finalBal = address(this).balance;
+        uint256 finalBal = address(this).balance;
         require(expactedBal >= finalBal, "Not enough interest paid");
 
         profit += finalBal - originalBal;
