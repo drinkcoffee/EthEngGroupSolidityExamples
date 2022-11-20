@@ -10,7 +10,7 @@ The contracts folder holds the following files:
 * UpgradeProxy.sol: Transparent proxy that facilitates upgrade.
 
 Note: A solution to resolve many of the issues in these contracts
-is to use OpenZeppelin contract. Candidates should point this out. 
+is to use OpenZeppelin contracts. Candidates should point this out. 
 However, the purpose of this exercise is to create a self-standing 
 set of contracts.
 
