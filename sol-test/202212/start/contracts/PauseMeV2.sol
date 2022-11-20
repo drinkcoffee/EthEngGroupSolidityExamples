@@ -31,10 +31,8 @@ abstract contract PauseMeV2 is Admin {
     }
 
 
-//TODO switch logic
     function pause() external onlyPauser {
         notPaused = false;
-        emit Paused(msg.sender);
     }
     function unpause() external onlyPauser {
         notPaused = true;

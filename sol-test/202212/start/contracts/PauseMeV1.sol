@@ -19,11 +19,11 @@ abstract contract PauseMeV1 is Admin {
         _;
     }
 
-    function pause() external onlyAdmin {
+    function pause() external {
         notPaused = true;
     }
 
-    function unpause() external onlyAdmin {
+    function unpause() external {
         notPaused = false;
         emit Unpaused(msg.sender);
     }
