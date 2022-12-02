@@ -2,40 +2,36 @@
 // Peter Robinson
 pragma solidity ^0.8.11;
 
+import "./PauseMeBase.sol";
+import "./interfaces/IPauseMeV2.sol";
 import "./Admin.sol";
 
 /**
  * Pause the non-configuration flows of the contract
  */
-abstract contract PauseMeV2 is Admin {
-    event Paused(address account);
-    event Unpaused(address account);
-
-    bool private notPaused;
-
+abstract contract PauseMeV2 is Admin, PauseMeBase { //}, IPauseMeV2 {
     address public pauser;
 
-
-    modifier whenNotPaused() {
-        require(notPaused, "Paused!");
-        _;
-    }
 
     modifier onlyPauser() {
         require(msg.sender == pauser, "Not pauser!");
         _;
     }
 
-    constructor(address _pauser) {
-        pauser = _pauser;
+    function initialisePause() internal {
+        unpauseInternal();
+        pauser = msg.sender;
     }
 
-
-    function pause() external onlyPauser {
-        notPaused = false;
+    function pause() external override onlyPauser {
+        pauseInternal();
     }
-    function unpause() external onlyPauser {
-        notPaused = true;
-        emit Unpaused(msg.sender);
+
+    function unpause() external override onlyPauser {
+        unpauseInternal();
+    }
+
+    function transferPauserRole(address _newPauser) external onlyAdmin {
+        pauser = _newPauser;
     }
 }

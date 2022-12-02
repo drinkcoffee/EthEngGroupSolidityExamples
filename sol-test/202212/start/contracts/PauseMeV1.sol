@@ -3,28 +3,24 @@
 pragma solidity ^0.8.11;
 
 import "./Admin.sol";
+import "./PauseMeBase.sol";
 
 /**
  * Pause the non-configuration flows of the contract
  */
-abstract contract PauseMeV1 is Admin {
-    event Paused(address account);
-    event Unpaused(address account);
-
-    bool private notPaused;
+abstract contract PauseMeV1 is Admin, PauseMeBase {
 
 
-    modifier whenNotPaused() {
-        require(notPaused, "Paused!");
-        _;
+    function initialisePause() internal {
+        unpauseInternal();
     }
 
-    function pause() external {
-        notPaused = true;
+
+    function pause() external override onlyAdmin {
+        pauseInternal();
     }
 
-    function unpause() external {
-        notPaused = false;
-        emit Unpaused(msg.sender);
+    function unpause() external override onlyAdmin {
+        unpauseInternal();
     }
 }
