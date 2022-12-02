@@ -7,7 +7,7 @@ between the two is that the functionality around pausing the system
 has been improved for V2. The contracts are accessed via a transparant
 upgrade proxy  ```UpgradeProxy```.
 
-There are 3 advanced, 4 intermediate, and 2 beginner issues with the 
+There are 3 advanced, 4 intermediate, and 3 beginner issues with the 
 contracts. 
 
 Note: A solution to resolve many of the issues in these contracts

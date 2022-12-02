@@ -1,0 +1,34 @@
+// SPDX-License-Identifier: MIT
+
+module.exports = {
+
+    adminAfterInitialise: async function(flashLoanContract, accounts) {
+        const admin = await flashLoanContract.admin.call();
+        assert.equal(admin, accounts[0], "Unexpectedly, deployer not owner");
+    },
+
+    transferOwnership: async function(flashLoanContract, accounts) {
+        // Admin should now be accounts[0]
+        await flashLoanContract.transferOwnership(accounts[1]); // Note: default transaction signer is accounts[0]
+
+        const admin = await flashLoanContract.admin.call();
+        assert.equal(admin, accounts[1], "Unexpectedly, ownership not changed");
+    },
+
+    transferOwnershipAccessControl: async function(flashLoanContract, accounts) {
+        let didNotTriggerError = false;
+        try {
+            await flashLoanContract.transferOwnership(accounts[1],  {from: accounts[1]});
+            didNotTriggerError = true;
+        } catch(err) {
+            // Expect that a revert will be called: see assert below.
+            // console.log("ERROR! " + err.message);
+        }
+        assert.equal(didNotTriggerError, false, "Unexpectedly, transferOwnership from the wrong account didn't cause a revert");
+    },
+
+};
+
+
+
+

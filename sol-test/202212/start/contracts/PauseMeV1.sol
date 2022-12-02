@@ -16,7 +16,7 @@ abstract contract PauseMeV1 is Admin, PauseMeBase {
     }
 
 
-    function pause() external override onlyAdmin {
+    function pause() external override {
         pauseInternal();
     }
 

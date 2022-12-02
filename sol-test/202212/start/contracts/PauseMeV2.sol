@@ -18,7 +18,7 @@ abstract contract PauseMeV2 is Admin, PauseMeBase { //}, IPauseMeV2 {
         _;
     }
 
-    function initialisePause() internal {
+    constructor() {
         unpauseInternal();
         pauser = msg.sender;
     }
