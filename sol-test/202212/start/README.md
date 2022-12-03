@@ -15,3 +15,8 @@ is to use OpenZeppelin contracts. Candidates should point this out.
 However, the purpose of this exercise is to create a self-standing
 set of contracts.
 
+To build and test:
+
+1. Install Truffle: See: https://trufflesuite.com/docs/truffle/how-to/install/
+2. Run tests: ```truffle test```
+
