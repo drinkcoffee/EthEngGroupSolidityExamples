@@ -2,7 +2,6 @@
 // Peter Robinson: Dec 2022 Solidity Recruitment Test
 pragma solidity ^0.8.11;
 
-import "./interfaces/IAdmin.sol";
 import "./Admin.sol";
 
 contract UpgradeProxy is Admin {
