@@ -3,7 +3,7 @@
 pragma solidity ^0.8.16;
 
 import "./Admin.sol";
-import "./PauseMeV2.sol";
+import "./PauseMeBase.sol";
 import "./VersionInit.sol";
 import "./interfaces/FlashLoanInterface.sol";
 import "./interfaces/FlashLoanReceiverInterface.sol";
