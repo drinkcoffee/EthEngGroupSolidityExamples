@@ -2,21 +2,34 @@
 
 const FlashLoanV2 = artifacts.require("./FlashLoanV2.sol");
 const UpgradeProxy = artifacts.require("./UpgradeProxy.sol");
+const truffleAssert = require('truffle-assertions');
 
 
 contract('Upgrade', function(accounts) {
     let common = require('./common');
 
-    // it("upgrade to self V1", async function() {
-    //     let flashLoanContract = await common.getFlashLoanV1InitViaProxy();
-    //     await upgradeToSelf(flashLoanContract);
-    // });
-    //
-    // it("upgrade to self V2", async function() {
-    //     let flashLoanContract = await common.getFlashLoanV2InitViaProxy();
-    //     await upgradeToSelf(flashLoanContract);
-    // });
-    //
+    it("upgrade to self V1", async function() {
+        let flashLoanContract = await common.getFlashLoanV1();
+
+        let notUsed = web3.eth.abi.encodeParameter('bytes', '0x616263');
+        await truffleAssert.fails(
+            flashLoanContract.upgrade(notUsed),
+            truffleAssert.ErrorType.REVERT,
+            "Version 1 contract"
+        );
+    });
+
+    it("upgrade to self V2", async function() {
+        let flashLoanContract = await common.getFlashLoanV2();
+
+        let notUsed = web3.eth.abi.encodeParameter('bytes', '0x616263');
+        await truffleAssert.fails(
+            flashLoanContract.upgrade(notUsed),
+            truffleAssert.ErrorType.REVERT,
+            "Already upgraded"
+        );
+    });
+
     // it("upgrade v1 to v2", async function() {
     //     let flashLoanContract = await common.getFlashLoanV1InitViaProxy();
     //     let upgradeProxy = await UpgradeProxy.at(flashLoanContract.address);
@@ -72,20 +85,4 @@ contract('Upgrade', function(accounts) {
 
 
     // TODO Add a test to check that the PROXY upgrade function feeds the parameters through to a dummy V3 implementation contract
-
-    // // This test checks that if someone calls the upgrade function via the proxy,
-    // // that a revert occurs.
-    // async function upgradeToSelf(flashLoanContract) {
-    //     let notUsed = web3.eth.abi.encodeParameter('bytes', '0x616263');
-    //
-    //     let didNotTriggerError = false;
-    //     try {
-    //         await flashLoanContract.upgrade(notUsed);
-    //         didNotTriggerError = true;
-    //     } catch(err) {
-    //         // Expect that a revert will be called: see assert below.
-    //         // console.log("ERROR! " + err.message);
-    //     }
-    //     assert.equal(didNotTriggerError, false, "Unexpectedly, calling upgrade on deployed version didn't revert");
-    // }
 });

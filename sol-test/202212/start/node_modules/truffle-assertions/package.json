@@ -1,0 +1,53 @@
+{
+  "name": "truffle-assertions",
+  "version": "0.9.2",
+  "description": "Additional assertions and utilities for testing Ethereum smart contracts in Truffle unit tests",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "test": "nyc mocha",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "lint": "eslint index.js test/*.js",
+    "lint-fix": "eslint --fix index.js test/*.js"
+  },
+  "nyc": {
+    "temp-directory": "./node_modules/.nyc_output"
+  },
+  "keywords": [
+    "truffle",
+    "assert",
+    "assertions",
+    "test",
+    "events",
+    "ethereum",
+    "solidity"
+  ],
+  "author": "Rosco Kalis",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rkalis/truffle-assertions"
+  },
+  "bugs": {
+    "url": "https://github.com/rkalis/truffle-assertions/issues"
+  },
+  "homepage": "https://github.com/rkalis/truffle-assertions",
+  "dependencies": {
+    "assertion-error": "^1.1.0",
+    "lodash.isequal": "^4.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "codecov": "^3.6.1",
+    "coveralls": "^3.0.7",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
+    "sinon": "^7.5.0"
+  }
+}

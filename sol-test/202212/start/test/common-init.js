@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const truffleAssert = require("truffle-assertions");
 
 module.exports = {
 
@@ -6,15 +7,11 @@ module.exports = {
         // Interest rate is 100, which is 0.01%
         interestRateParam = web3.eth.abi.encodeParameter('uint256', '0x0000000000000000000000000000000000000000000000000000000000000064');
 
-        let didNotTriggerError = false;
-        try {
-            await flashLoanContract.initialise(interestRateParam);
-            didNotTriggerError = true;
-        } catch(err) {
-            // Expect that a revert will be called: see assert below.
-            // console.log("ERROR! " + err.message);
-        }
-        assert.equal(didNotTriggerError, false, "Unexpectedly, calling initialise twice didn't revert");
+        await truffleAssert.fails(
+            flashLoanContract.initialise(interestRateParam),
+            truffleAssert.ErrorType.REVERT,
+            "Already initialised."
+        );
     },
 };
 

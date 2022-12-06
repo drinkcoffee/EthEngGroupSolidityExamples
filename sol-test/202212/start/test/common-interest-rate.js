@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 let common = require('./common');
+const truffleAssert = require("truffle-assertions");
 
 module.exports = {
 
@@ -25,15 +26,11 @@ module.exports = {
 
         await testFlashLoanContract.setFakeBlockNumber(expectedInterestRateChangeBlock);
 
-        let didNotTriggerError = false;
-        try {
-            await testFlashLoanContract.changeInterestRate();
-            didNotTriggerError = true;
-        } catch(err) {
-            // Expect that a revert will be called: see assert below.
-            // console.log("ERROR! " + err.message);
-        }
-        assert.equal(didNotTriggerError, false, "Unexpectedly, changeInterestRate prior to wait did not trigger revert");
+        await truffleAssert.fails(
+            flashLoanContract.changeInterestRate(),
+            truffleAssert.ErrorType.REVERT,
+            "Can't change interest rate yet."
+        );
 
         // One block later, it should work.
         await testFlashLoanContract.setFakeBlockNumber(expectedInterestRateChangeBlock + 1);
@@ -49,15 +46,11 @@ module.exports = {
     },
 
     setInterestRateAccessControl: async function(flashLoanContract, accounts) {
-        let didNotTriggerError = false;
-        try {
-            await testFlashLoanContract.setInterestRate(10, accounts[1]);
-            didNotTriggerError = true;
-        } catch(err) {
-            // Expect that a revert will be called: see assert below.
-            // console.log("ERROR! " + err.message);
-        }
-        assert.equal(didNotTriggerError, false, "Unexpectedly, changeInterestRate prior to wait did not trigger revert");
+        await truffleAssert.fails(
+            flashLoanContract.setInterestRate(10, {from: accounts[1]}),
+            truffleAssert.ErrorType.REVERT,
+            "Not admin!"
+        );
     },
 
     changeInterestRateAccessControl: async function(testFlashLoanContract, accounts) {
@@ -71,7 +64,3 @@ module.exports = {
     },
 
 };
-
-
-
-

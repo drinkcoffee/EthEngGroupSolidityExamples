@@ -18,5 +18,6 @@ set of contracts.
 To build and test:
 
 1. Install Truffle: See: https://trufflesuite.com/docs/truffle/how-to/install/
-2. Run tests: ```truffle test```
+2. Install Truffle asserts: ```npm install truffle-assertions```
+3. Run tests: ```truffle test```
 

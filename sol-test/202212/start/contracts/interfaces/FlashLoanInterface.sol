@@ -45,11 +45,21 @@ interface FlashLoanInterface /* Avoid complexities of diamond inheritence by com
     function changeInterestRate() external;
 
 
+    /**
+     * Deposit some value into the contract.
+     *
+     * @param _depositId The identifier used to specify this deposit. This can not have been used
+     *        in a previous deposit.
+     * @param _beneficiary The party that will be able to call payout.
+     *
+     */
     function deposit(uint256 _depositId, address _beneficiary) payable external;
 
 
     /*
-     * Close a deposit and pay to the beneficiary.
+     * Close a deposit and pay to the beneficiary. The benficiary must be the entity
+     * calling this function. The amount deposited plus a proportion of the profit is
+     * paid out.
      *
      * @param _depostId The deposit to close.
      */

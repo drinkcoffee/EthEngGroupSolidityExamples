@@ -1,43 +1,50 @@
 // SPDX-License-Identifier: MIT
+const truffleAssert = require('truffle-assertions');
 
 contract('FlashLoanV2, Pause', function(accounts) {
     let common = require('./common');
     let commonPause = require('./common-pause');
 
+    beforeEach(async function () {
+        flashLoanContract = await common.getFlashLoanV2();
+    })
+
+
     // it("pause after initialise", async function() {
-    //     let flashLoanContract = await common.getFlashLoanV2();
     //     await commonPause.pauseAfterInitialise(flashLoanContract);
     // });
     //
     // it("pause request", async function() {
-    //     let flashLoanContract = await common.getFlashLoanV2();
     //     await commonPause.pauseRequest(flashLoanContract);
     // });
     //
     // it("unpause request", async function() {
-    //     let flashLoanContract = await common.getFlashLoanV2();
     //     await commonPause.unpauseRequest(flashLoanContract);
     // });
 
     it("pause request access control", async function() {
-        let flashLoanContract = await common.getFlashLoanV2();
-        await commonPause.pauseRequestAccessControl(flashLoanContract);
+        await truffleAssert.fails(
+            flashLoanContract.pause({from: accounts[1]}),
+            truffleAssert.ErrorType.REVERT,
+            "Not pauser!"
+        );
     });
 
     it("unpause request access control", async function() {
-        let flashLoanContract = await common.getFlashLoanV2();
-        await commonPause.unpauseRequestAccessControl(flashLoanContract);
+        await truffleAssert.fails(
+            flashLoanContract.unpause({from: accounts[1]}),
+            truffleAssert.ErrorType.REVERT,
+            "Not pauser!"
+        );
     });
 
 
     it("pauser after initialise", async function() {
-        let flashLoanContract = await common.getFlashLoanV2();
         const pauser = await flashLoanContract.pauser.call();
         assert.equal(pauser, accounts[0], "Unexpectedly, wrong account for pauser");
     });
 
     it("change pauser role", async function() {
-        let flashLoanContract = await common.getFlashLoanV2();
         // Admin should now be accounts[0]
         await flashLoanContract.transferPauserRole(accounts[1]); // Note: default transaction signer is accounts[0]
         const pauser = await flashLoanContract.pauser.call();
@@ -47,7 +54,6 @@ contract('FlashLoanV2, Pause', function(accounts) {
     });
 
     it("change pauser access control", async function() {
-        let flashLoanContract = await common.getFlashLoanV2();
         let didNotTriggerError = false;
         try {
             await flashLoanContract.transferPauserRole(accounts[1],  {from: accounts[1]});

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const truffleAssert = require('truffle-assertions');
 
 module.exports = {
 
@@ -16,15 +17,12 @@ module.exports = {
     },
 
     transferOwnershipAccessControl: async function(flashLoanContract, accounts) {
-        let didNotTriggerError = false;
-        try {
-            await flashLoanContract.transferOwnership(accounts[1],  {from: accounts[1]});
-            didNotTriggerError = true;
-        } catch(err) {
-            // Expect that a revert will be called: see assert below.
-            // console.log("ERROR! " + err.message);
-        }
-        assert.equal(didNotTriggerError, false, "Unexpectedly, transferOwnership from the wrong account didn't cause a revert");
+        // transferOwnership from the wrong account
+        await truffleAssert.fails(
+            flashLoanContract.transferOwnership(accounts[1],  {from: accounts[1]}),
+            truffleAssert.ErrorType.REVERT,
+            "Not admin!"
+        );
     },
 
 };

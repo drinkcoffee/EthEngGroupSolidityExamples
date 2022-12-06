@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 let common = require('./common');
+const truffleAssert = require("truffle-assertions");
 
 module.exports = {
 
@@ -58,15 +59,11 @@ module.exports = {
         const loanAmount = 10000;
         const flashLoanReceiver = await common.getTestFlashLoanReceiver(flashLoanContract);
 
-        let didNotTriggerError = false;
-        try {
-            await flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount)
-            didNotTriggerError = true;
-        } catch(err) {
-            // Expect that a revert will be called: see assert below.
-            // console.log("ERROR! " + err.message);
-        }
-        assert.equal(didNotTriggerError, false, "Unexpectedly, loan receiver not paying enough didn't cause a revert");
+        await truffleAssert.fails(
+            flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount),
+            truffleAssert.ErrorType.REVERT,
+            "Not enough interest paid."
+        );
     },
 
     flashloanApplicationRevert: async function(flashLoanContract, accounts) {
@@ -84,15 +81,11 @@ module.exports = {
         const loanAmount = 10000;
         const flashLoanReceiver = await common.getTestFlashLoanReceiver(flashLoanContract);
 
-        let didNotTriggerError = false;
-        try {
-            await flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount)
-            didNotTriggerError = true;
-        } catch(err) {
-            // Expect that a revert will be called: see assert below.
-            // console.log("ERROR! " + err.message);
-        }
-        assert.equal(didNotTriggerError, false, "Unexpectedly, loan receiver reverting didn't cause a revert");
+        await truffleAssert.fails(
+            flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount),
+            truffleAssert.ErrorType.REVERT,
+            "Fail call."
+        );
     },
 
     flashloanMoreMoneyThanAvailable: async function(flashLoanContract, accounts) {
@@ -110,15 +103,11 @@ module.exports = {
         const loanAmount = 99999999;
         const flashLoanReceiver = await common.getTestFlashLoanReceiver(flashLoanContract);
 
-        let didNotTriggerError = false;
-        try {
-            await flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount)
-            didNotTriggerError = true;
-        } catch(err) {
-            // Expect that a revert will be called: see assert below.
-            // console.log("ERROR! " + err.message);
-        }
-        assert.equal(didNotTriggerError, false, "Unexpectedly, didn't revert when not enough funds for loan");
+        await truffleAssert.fails(
+            flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount),
+            truffleAssert.ErrorType.REVERT,
+            ""
+        );
     },
 
     flashloanPause: async function(flashLoanContract, accounts) {
@@ -136,15 +125,11 @@ module.exports = {
 
         await flashLoanContract.pause();
 
-        let didNotTriggerError = false;
-        try {
-            await flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount)
-            didNotTriggerError = true;
-        } catch(err) {
-            // Expect that a revert will be called: see assert below.
-            // console.log("ERROR! " + err.message);
-        }
-        assert.equal(didNotTriggerError, false, "Unexpectedly, didn't revert when paused");
+        await truffleAssert.fails(
+            flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount),
+            truffleAssert.ErrorType.REVERT,
+            "Paused!"
+        );
     },
 
     flashloanCallDeposit: async function(flashLoanContract, accounts) {
@@ -162,15 +147,11 @@ module.exports = {
         const loanAmount = 10000;
         const flashLoanReceiver = await common.getTestFlashLoanReceiver(flashLoanContract);
 
-        let didNotTriggerError = false;
-        try {
-            await flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount)
-            didNotTriggerError = true;
-        } catch(err) {
-            // Expect that a revert will be called: see assert below.
-            // console.log("ERROR! " + err.message);
-        }
-        assert.equal(didNotTriggerError, false, "Unexpectedly, didn't revert when deposit called");
+        await truffleAssert.fails(
+            flashLoanContract.flashLoan(flashLoanReceiver.address, params, loanAmount),
+            truffleAssert.ErrorType.REVERT,
+            "Can't deposit during flash loan."
+        );
     },
 };
 
