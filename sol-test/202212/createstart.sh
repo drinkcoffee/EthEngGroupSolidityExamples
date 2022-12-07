@@ -30,3 +30,7 @@ mv temp $CONTRACTSDIR/test/TestFlashLoanV1.sol
 sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/test/TestFlashLoanV2.sol > temp
 mv temp $CONTRACTSDIR/test/TestFlashLoanV2.sol
 
+
+grep -r TODO start | grep sol
+
+
