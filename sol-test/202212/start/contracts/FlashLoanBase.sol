@@ -80,6 +80,8 @@ abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, Admin, Pause
 
         uint256 amount = msg.value;
 
+        require(msg.value != 0, "Deposit must be greater than zero");
+
 
         accounts[_depositId].beneficiary = _beneficiary;
         accounts[_depositId].amount = amount;
@@ -108,8 +110,7 @@ abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, Admin, Pause
         lastDepositWithdrawalBlock = blockNum;
         totalDepositValue -= accounts[_depositId].amount;
 
-        uint256 myPercentage = INTEREST_DIVISOR * myDepositVolume / tempDepositVolume;
-        uint256 myProfit = profit * myPercentage / INTEREST_DIVISOR;
+        uint256 myProfit = profit * myDepositVolume / tempDepositVolume;
         profit = profit - myProfit;
         uint256 payoutValue = myProfit + accounts[_depositId].amount;
 
