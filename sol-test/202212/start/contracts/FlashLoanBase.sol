@@ -19,7 +19,6 @@ abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, Admin, Pause
     // Minimum number of blocks between calling setInterestRate and changeInterestRate.
     uint256 constant MIN_INTEREST_RATE_CHANGE_PERIOD = 1000;
 
-    // TODO: Advanced: Gas Saving: To save gas, only store a hash, and pass in params as calldata
     struct DepositStruct {
         address beneficiary;
         uint256 amount;
@@ -59,7 +58,6 @@ abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, Admin, Pause
     receive() external payable {
     }
 
-    // TODO: Intermediate: Upgrade: This will not be called during upgrade as it is not callable by initialise. It will not execute in the context of the proxy contract.
     constructor(uint256 _interestRatePerBlock) {
         lastDepositWithdrawalBlock = blockNumber();
         interestRatePerBlock = _interestRatePerBlock;
@@ -79,13 +77,10 @@ abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, Admin, Pause
 
 
     function deposit(uint256 _depositId, address _beneficiary) payable external override whenNotPaused {
-        // TODO: Intermediate: Security: prevent re-entrancy from flashLoan
 
         uint256 amount = msg.value;
 
-        // TODO: Intermediate: Security: require deposit doesn't exist yet
 
-        // TODO: Advanced: Gas Saving: To save gas, only store a hash, and pass in params as calldata
         accounts[_depositId].beneficiary = _beneficiary;
         accounts[_depositId].amount = amount;
         accounts[_depositId].interestRate = interestRatePerBlock;
@@ -133,7 +128,6 @@ abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, Admin, Pause
         emit Payout(_depositId, payoutValue);
     }
 
-    // TODO Basic: should be when not paused
     function flashLoan(address _receiver, bytes calldata _params, uint256 _loanAmount) external override {
         // Prevent recursive calls. An attacker could all flashLoan, and then recursively call it
         // so that inFlashLoan gets set to false, and then call deposit using flash loaned funds.

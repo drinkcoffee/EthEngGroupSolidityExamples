@@ -22,13 +22,11 @@ abstract contract PauseMeBase is IPauseMe {
 
     // ************** Private and Internal *****************
     function pauseInternal() internal {
-        // TODO: Basic: Logic: switch logic: should be notPaused = false
         notPaused = true;
         emit Paused(msg.sender);
     }
 
     function unpauseInternal() internal {
-        // TODO: Basic: Logic: switch logic: should be notPaused = true
         notPaused = false;
         emit Unpaused(msg.sender);
     }

@@ -8,7 +8,6 @@ contract TestFlashLoanV2 is FlashLoanV2 {
 
     uint256 private fakeBlockNumber;
 
-    // TODO: Intermediate: Upgrade: This will not be called during upgrade as it is not callable by initialise. It will not execute in the context of the proxy contract.
     constructor(uint256 _interestRatePerBlock) FlashLoanV2(_interestRatePerBlock){
     }
 

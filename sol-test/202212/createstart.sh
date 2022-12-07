@@ -17,7 +17,16 @@ sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/FlashLoanV1.sol > 
 mv temp $CONTRACTSDIR/FlashLoanV1.sol
 sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/FlashLoanV2.sol > temp
 mv temp $CONTRACTSDIR/FlashLoanV2.sol
+sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/FlashLoanBase.sol > temp
+mv temp $CONTRACTSDIR/FlashLoanBase.sol
 sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/UpgradeProxy.sol > temp
 mv temp $CONTRACTSDIR/UpgradeProxy.sol
 
+sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/PauseMeBase.sol > temp
+mv temp $CONTRACTSDIR/PauseMeBase.sol
+
+sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/test/TestFlashLoanV1.sol > temp
+mv temp $CONTRACTSDIR/test/TestFlashLoanV1.sol
+sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/test/TestFlashLoanV2.sol > temp
+mv temp $CONTRACTSDIR/test/TestFlashLoanV2.sol
 
