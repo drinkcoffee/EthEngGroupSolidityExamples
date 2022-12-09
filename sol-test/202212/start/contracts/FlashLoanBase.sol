@@ -132,10 +132,11 @@ abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, Admin, Pause
     function flashLoan(address _receiver, bytes calldata _params, uint256 _loanAmount) external override {
         // Prevent recursive calls. An attacker could all flashLoan, and then recursively call it
         // so that inFlashLoan gets set to false, and then call deposit using flash loaned funds.
-        require(!inFlashLoan, "Can't call flash loan twice");
+        require(!inFlashLoan, "Can't recursively call flash loan");
         inFlashLoan = true;
 
         uint256 originalBal = address(this).balance;
+        require(_loanAmount <= originalBal, "Not enough funds");
         // Add one, so that if the loan amount is very small, there will be some interest paid.
         uint256 fee = _loanAmount * interestRatePerBlock / INTEREST_DIVISOR + 1;
 
