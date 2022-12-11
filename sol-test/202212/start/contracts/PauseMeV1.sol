@@ -8,7 +8,7 @@ import "./PauseMeBase.sol";
 /**
  * Pause the non-configuration flows of the contract
  */
-abstract contract PauseMeV1 is Admin, PauseMeBase {
+abstract contract PauseMeV1 is PauseMeBase, Admin {
 
 
     function initialisePause() internal {

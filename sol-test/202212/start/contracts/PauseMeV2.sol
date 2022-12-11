@@ -9,7 +9,7 @@ import "./Admin.sol";
 /**
  * Pause the non-configuration flows of the contract
  */
-abstract contract PauseMeV2 is Admin, PauseMeBase { //}, IPauseMeV2 {
+abstract contract PauseMeV2 is PauseMeBase, Admin { //}, IPauseMeV2 {
     address public pauser;
 
 

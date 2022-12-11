@@ -10,7 +10,7 @@ import "./interfaces/FlashLoanReceiverInterface.sol";
 
 /**
  */
-abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, Admin, PauseMeBase {
+abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, PauseMeBase, Admin {
     uint256 constant INTEREST_DIVISOR = 1000000;
 
     // Minimum period a deposit must be held, in blocks.
