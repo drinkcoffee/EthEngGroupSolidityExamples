@@ -15,7 +15,7 @@ import "./FlashLoanBase.sol";
  * of how long their deposit has been held and how much they have invested.
  *
  */
-contract FlashLoanV1 is FlashLoanBase, PauseMeV1 {
+contract FlashLoanV1 is PauseMeV1, FlashLoanBase {
     constructor(uint256 _interestRatePerBlock) FlashLoanBase(_interestRatePerBlock){
         version = VERSION1;
     }

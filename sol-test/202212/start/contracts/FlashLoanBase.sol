@@ -10,7 +10,7 @@ import "./interfaces/FlashLoanReceiverInterface.sol";
 
 /**
  */
-abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, PauseMeBase, Admin {
+abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, Admin, PauseMeBase {
     uint256 constant INTEREST_DIVISOR = 1000000;
 
     // Minimum period a deposit must be held, in blocks.
@@ -78,8 +78,8 @@ abstract contract FlashLoanBase is FlashLoanInterface, VersionInit, PauseMeBase,
 
     function deposit(uint256 _depositId, address _beneficiary) payable external override whenNotPaused {
 
-        uint256 amount = msg.value;
 
+        uint256 amount = msg.value;
         require(msg.value != 0, "Deposit must be greater than zero");
 
 

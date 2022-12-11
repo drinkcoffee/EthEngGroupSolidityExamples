@@ -8,7 +8,7 @@ import "./interfaces/IPauseMe.sol";
  * Pause the non-configuration flows of the contract
  */
 abstract contract PauseMeBase is IPauseMe {
-    // True when contract paused.
+    // True when contract not paused.
     bool private notPaused;
 
     modifier whenNotPaused() {

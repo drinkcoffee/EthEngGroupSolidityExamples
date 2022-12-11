@@ -9,7 +9,7 @@ import "./FlashLoanBase.sol";
  * NOTE: FlashLoanV2 is the same as FlashLoanV1, with the exception that
  * FlashLoanV2 uses PauseMeV2.
  */
-contract FlashLoanV2 is FlashLoanBase, PauseMeV2 {
+contract FlashLoanV2 is PauseMeV2, FlashLoanBase {
     constructor(uint256 _interestRatePerBlock) FlashLoanBase(_interestRatePerBlock){
         version = VERSION2;
     }
