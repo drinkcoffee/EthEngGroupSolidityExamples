@@ -1,0 +1,38 @@
+Rubtime Bytecode from Proxy.sol
+
+ PC: 0x0, opcode: PUSH1 0x80
+ PC: 0x2, opcode: PUSH1 0x40
+ PC: 0x4, opcode: MSTORE
+
+ PC: 0x5, opcode: ADDRESS
+ PC: 0x6, opcode: SLOAD
+ PC: 0x7, opcode: CALLDATASIZE
+ PC: 0x8, opcode: PUSH1 0x00
+ PC: 0xa, opcode: DUP1
+ PC: 0xb, opcode: CALLDATACOPY
+ PC: 0xc, opcode: PUSH1 0x00
+ PC: 0xe, opcode: DUP1
+ PC: 0xf, opcode: CALLDATASIZE
+ PC: 0x10, opcode: PUSH1 0x00
+ PC: 0x12, opcode: DUP5
+ PC: 0x13, opcode: GAS
+ PC: 0x14, opcode: DELEGATECALL
+ PC: 0x15, opcode: RETURNDATASIZE
+ PC: 0x16, opcode: PUSH1 0x00
+ PC: 0x18, opcode: DUP1
+ PC: 0x19, opcode: RETURNDATACOPY
+ PC: 0x1a, opcode: DUP1
+ PC: 0x1b, opcode: DUP1
+ PC: 0x1c, opcode: ISZERO
+ PC: 0x1d, opcode: PUSH1 0x24
+ PC: 0x1f, opcode: JUMPI
+
+ PC: 0x20, opcode: RETURNDATASIZE
+ PC: 0x21, opcode: PUSH1 0x00
+ PC: 0x23, opcode: RETURN
+ 
+ PC: 0x24, opcode: JUMPDEST
+ PC: 0x25, opcode: RETURNDATASIZE
+ PC: 0x26, opcode: PUSH1 0x00
+ PC: 0x28, opcode: REVERT
+
