@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
-pragma solidity ^0.8.3;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
 
 /*
   Proxy contract which is used as the proxy contract for smart contract wallet instances.
