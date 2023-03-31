@@ -5,11 +5,15 @@ pragma solidity ^0.8.19;
   Proxy contract which is used as the proxy contract for smart contract wallet instances.
   Exposes a view function to retrieve the implementation address stored at the address storage location.
  */
-contract Proxy {
+contract Proxy2 {
+
+    bytes32 internal constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bb0;
+
+
     /// @dev Sets implementation contract on deployment
     constructor(address _implementation) {
         assembly {
-            sstore(address(), _implementation)
+            sstore(_IMPLEMENTATION_SLOT, _implementation)
         } 
     }
 
@@ -22,9 +26,13 @@ contract Proxy {
 
     /// @dev Fallback function to forward calls to implementation contract
     fallback() external payable {
+        address target;// = PROXY_getImplementation();
+                assembly{
+            target := sload(_IMPLEMENTATION_SLOT)
+        }
+
         // solhint-disable-next-line no-inline-assembly
         assembly {
-            let target := sload(address())
             calldatacopy(0, 0, calldatasize())
             let result := delegatecall(gas(), target, 0, calldatasize(), 0, 0)
             returndatacopy(0, 0, returndatasize())
