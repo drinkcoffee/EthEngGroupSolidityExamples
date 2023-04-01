@@ -29,12 +29,12 @@ object "ProxyGetImplYul" {
     // Code for deployed contract
     object "runtime" {
         code {
-            // The code below for loading the function selector is taken from the ERC 20 
-            // example in the Yul documentation.
+            // Load the function selector (the first four bytes of calldata) by shifting the 
+            // word to the right. Do this by division. The code below was taken from:
             // https://docs.soliditylang.org/en/v0.8.17/yul.html#complete-erc20-example
             let selector := div(calldataload(0), 0x100000000000000000000000000000000000000000000000000000000)
 
-            if eq(selector, 0x90611127) /* "PROXY_getImplementation()" */ {
+            if eq(selector, 0x90611127) /* Function selector for "PROXY_getImplementation()" */ {
                 let impl := sload(address())
                 mstore(0, impl)
                 return(0, 0x20)
