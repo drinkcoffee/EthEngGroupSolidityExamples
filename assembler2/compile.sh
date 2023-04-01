@@ -5,3 +5,6 @@ solc contracts/Proxy.sol --bin-runtime --no-cbor-metadata --optimize --optimize-
 # solc contracts/Proxy.sol --bin --no-cbor-metadata --optimize --optimize-runs=1000
 
 solc contracts/Jump.sol --bin-runtime --no-cbor-metadata
+
+solc contracts/ProxyGetImpl.sol  --no-cbor-metadata --optimize --optimize-runs=1000  --hashes --gas
+solc --strict-assembly contracts/ProxyGetImplYul.yul --optimize --bin --optimize-runs=1000
