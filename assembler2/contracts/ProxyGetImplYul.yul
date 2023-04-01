@@ -36,21 +36,21 @@ object "ProxyGetImplYul" {
 
             if eq(selector, 0x90611127) /* Function selector for "PROXY_getImplementation()" */ {
                 let impl := sload(address())
-                mstore(0, impl)
-                return(0, 0x20)
+                mstore(returndatasize(), impl)
+                return(returndatasize(), 0x20)
             }
-
-            // Use returndatasize to load zero.
-            let zero := returndatasize()
 
             // Load calldata to memory location 0.
             // Copy s bytes from calldata at position f to mem at position t
             // calldatacopy(t, f, s)
-            calldatacopy(zero, zero, calldatasize())
+            calldatacopy(returndatasize(), returndatasize(), calldatasize())
 
             // Load the implemntation address. This is stored at a storage
             // location defined by the address of this contract.
 //            let implAddress := sload(address())
+
+            // Use returndatasize to load zero.
+            let zero := returndatasize()
 
             // Execute delegate call. Have outsize set to zero, to indicate
             // don't return any data automatically.
