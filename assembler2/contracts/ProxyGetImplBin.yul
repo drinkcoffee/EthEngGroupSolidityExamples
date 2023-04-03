@@ -5,6 +5,7 @@
 
 object "ProxyGetImplBin" {
     // This is the initcode and runtime code of the contract.
+    // NOTE: The compiler appended 0x00 to this, which makes the bytecode unusable.
     code {
         verbatim_0i_0o(hex"60356020810160113d39805130553df3fe639061112760003560e01c14602c57363d3d373d3d3d3d369030545af43d82803e156028573d90f35b3d90fd5b30543d5260203df3")
     }

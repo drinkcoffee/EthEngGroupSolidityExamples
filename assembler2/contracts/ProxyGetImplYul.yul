@@ -12,7 +12,6 @@ object "ProxyGetImplYul" {
         // codecopy(t, f, s)
         // This will turn into a memory->memory copy for Ewasm and
         // a codecopy for EVM
-        // TODO the add() of two constants could be pre-calculated
 //        datacopy(returndatasize(), dataoffset("runtime"), add(datasize("runtime"), 32))
         datacopy(returndatasize(), dataoffset("runtime"), 0x54)
 
