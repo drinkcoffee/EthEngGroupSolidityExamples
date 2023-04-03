@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@tovarishfin/hardhat-yul": "^3.0.5",
+    "hardhat": "^2.13.0"
+  },
+  "dependencies": {
+    "hardhat-gas-reporter": "^1.0.9"
+  }
+}

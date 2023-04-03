@@ -13,7 +13,8 @@ object "ProxyGetImplYul" {
         // This will turn into a memory->memory copy for Ewasm and
         // a codecopy for EVM
         // TODO the add() of two constants could be pre-calculated
-        datacopy(returndatasize(), dataoffset("runtime"), add(datasize("runtime"), 32))
+//        datacopy(returndatasize(), dataoffset("runtime"), add(datasize("runtime"), 32))
+        datacopy(returndatasize(), dataoffset("runtime"), 0x54)
 
         // Store the implementation address at the storage slot which is 
         // equivalent to the deployed address of this contract.
@@ -30,9 +31,8 @@ object "ProxyGetImplYul" {
     object "runtime" {
         code {
             // Load the function selector (the first four bytes of calldata) by shifting the 
-            // word to the right. Do this by division. The code below was taken from:
-            // https://docs.soliditylang.org/en/v0.8.17/yul.html#complete-erc20-example
-            let selector := div(calldataload(0), 0x100000000000000000000000000000000000000000000000000000000)
+            // word to the right. 
+            let selector := shr(224, calldataload(returndatasize()))
 
             if eq(selector, 0x90611127) /* Function selector for "PROXY_getImplementation()" */ {
                 let impl := sload(address())
