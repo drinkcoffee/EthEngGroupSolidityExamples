@@ -21,7 +21,8 @@ sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/BadProxy.sol > tem
 mv temp.txt $CONTRACTSDIR/BadProxy.sol
 sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/Inefficient.sol > temp.txt
 mv temp.txt $CONTRACTSDIR/Inefficient.sol
-
+sed '/^[[:blank:]]*\/\/ TODO/d;s/\/\/ TODO.*//' $CONTRACTSDIR/UnusedConstructor.sol > temp.txt
+mv temp.txt $CONTRACTSDIR/UnusedConstructor.sol
 
 grep -r TODO start | grep sol
 
@@ -32,6 +33,7 @@ solc $CONTRACTSDIR/BadUpgrade.sol
 solc $CONTRACTSDIR/Reentrancy.sol
 solc $CONTRACTSDIR/BadProxy.sol
 solc $CONTRACTSDIR/Inefficient.sol
+solc $CONTRACTSDIR/UnusedConstructor.sol
 
 
 

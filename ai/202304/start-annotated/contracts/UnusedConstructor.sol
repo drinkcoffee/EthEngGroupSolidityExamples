@@ -2,8 +2,30 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.11;
 
+abstract contract UnusedConstructorAdmin {
+    address public admin;
 
-abstract contract BadUpgrade {
+    // TODO: Likely to be upgradable as included by UnusedConstrctor
+    // TODO: Add in uint256 private __gap[100] 
+
+
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Not admin!");
+        _;
+    }
+
+    // TODO: Likely to be upgradable as included by UnusedConstrctor
+    // TODO: constructor will never be called.
+    constructor() {
+        admin = msg.sender;
+    }
+
+    function transferOwnership(address _newOwner) external onlyAdmin {
+        admin = _newOwner;
+    }
+} 
+
+abstract contract UnusedConstructor is UnusedConstructorAdmin {
     bool private notPaused;
 
     // TODO: Likely to be upgradable as: abstract, no constructor, initialize
@@ -26,12 +48,12 @@ abstract contract BadUpgrade {
         return !notPaused;
     }
 
-    function pause() internal {
+    function pause() external onlyAdmin {
         notPaused = false;
         emit Paused(msg.sender);
     }
 
-    function unpause() internal {
+    function unpause() external onlyAdmin {
         notPaused = true;
         emit Unpaused(msg.sender);
     }
