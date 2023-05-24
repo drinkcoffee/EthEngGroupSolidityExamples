@@ -19,40 +19,14 @@ abstract contract BadAuth {
 
     event FlashLoan(uint256 _balBefore, uint256 _fee,  uint256 _profit);
 
-    // TODO: Advanced: Gas Saving: To save gas, only store a hash, and pass in params as calldata
-    struct DepositStruct {
-        address beneficiary;
-        uint256 amount;
-        uint256 interestRate;
-        uint256 depositBlockNumber;
-    }
-    mapping (uint256 => DepositStruct) public accounts;
-
     // Current interest rate per block.
     uint256 public interestRatePerBlock;
-    // The forthcoming interest rate.
-    uint256 public nextInterestRatePerBlock;
-    // Block number when nextInterestRate will take effect.
-    uint256 public interestRateChangeBlock;
 
     // Interest earned that hasn't been distributed
     uint256 public profit;
 
-    // A combination of time (number of blocks) and amount deposited, for all deposits.
-    // Used to work out how much to pay out.
-    // The deposit volume is as at the lastDepositWithdrawalBlock. It is recalculated
-    // when deposit or payout are called.
-    uint256 public depositVolume;
-
-    // The amount of Eth deposited in the contract.
-    uint256 public totalDepositValue;
-
-    // The last block that the deposit volume has been recalculated for.
-    uint256 public lastDepositWithdrawalBlock;
-
     // Reentrancy check
     bool inFlashLoan;
-
 
     address private owner;
 
@@ -60,13 +34,10 @@ abstract contract BadAuth {
         owner = msg.sender;
     }
 
-
     // TODO Basic: should have authentication
     function setInterestRate(uint256 _rate) external {
         interestRatePerBlock = _rate;
     }
-
-
 
     function flashLoan(address _receiver, bytes calldata _params, uint256 _loanAmount) external {
         // Prevent recursive calls. An attacker could all flashLoan, and then recursively call it
