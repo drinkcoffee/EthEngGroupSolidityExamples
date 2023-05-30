@@ -1,8 +1,8 @@
 To run the script first install:
 
-pip3 install openai
-pip3 install env
-pip3 install python-dotenv
+* pip3 install openai
+* pip3 install env
+* pip3 install python-dotenv
 
 Have your OpenAI API key in an environment variable: OPENAI_API_KEY
 export OPENAI_API_KEY=<yourkey>
