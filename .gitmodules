@@ -1,0 +1,3 @@
+[submodule "sol-test/202312/nftcontract/lib/forge-std"]
+	path = sol-test/202312/nftcontract/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
