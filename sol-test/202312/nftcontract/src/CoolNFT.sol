@@ -8,7 +8,14 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721Pausab
 contract CoolNFT is  ERC721PausableUpgradeable, AccessControlUpgradeable {
     error NotPauser(address _notPauser);
     error NotUnpauser(address _notUnpauser);
+    error NotMinter(address _notMinter);
 
+    string public constant NAME = "Just Cool!";
+    string public constant SYMBOL = "JCL";
+
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant UNPAUSER_ROLE = keccak256("UNPAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     modifier onlyPauser {
         if (!hasRole(PAUSER_ROLE, msg.sender)) {
@@ -24,12 +31,12 @@ contract CoolNFT is  ERC721PausableUpgradeable, AccessControlUpgradeable {
         _;
     }
 
-
-    string public constant NAME = "Just Cool!";
-    string public constant SYMBOL = "JCL";
-
-    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-    bytes32 public constant UNPAUSER_ROLE = keccak256("UNPAUSER_ROLE");
+    modifier onlyMinter {
+        if (!hasRole(MINTER_ROLE, msg.sender)) {
+            revert NotMinter(msg.sender);
+        }
+        _;
+    }
 
     function initialize() public virtual onlyInitializing {
         __ERC721_init(NAME, SYMBOL);
@@ -37,6 +44,7 @@ contract CoolNFT is  ERC721PausableUpgradeable, AccessControlUpgradeable {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(PAUSER_ROLE, msg.sender);
         _grantRole(UNPAUSER_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
     }
 
     function pause() external onlyPauser {
@@ -46,6 +54,11 @@ contract CoolNFT is  ERC721PausableUpgradeable, AccessControlUpgradeable {
     function unpause() external onlyUnpauser {
         _unpause();
     }
+
+    function mint(address to, uint256 tokenId) external onlyMinter {
+        _mint(to, tokenId);
+    }
+
 
     /**
      * @dev See {IERC165-supportsInterface}.
