@@ -13,3 +13,6 @@
 [submodule "sol-test/202312/buy/lib/openzeppelin-contracts"]
 	path = sol-test/202312/buy/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "sol-test/202312/buy/lib/openzeppelin-contracts-upgradeable"]
+	path = sol-test/202312/buy/lib/openzeppelin-contracts-upgradeable
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable
