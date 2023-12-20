@@ -10,3 +10,6 @@
 [submodule "sol-test/202312/buy/lib/forge-std"]
 	path = sol-test/202312/buy/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "sol-test/202312/buy/lib/openzeppelin-contracts"]
+	path = sol-test/202312/buy/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
