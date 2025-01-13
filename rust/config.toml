@@ -1,0 +1,2 @@
+keystore_path = "/tmp/testnet.keystore.json"
+pw_path = "/tmp/testnet.pw"
