@@ -4,6 +4,10 @@ pragma solidity ^0.8.19;
 import {ICounter} from "./ICounter.sol";
 
 contract Counter is ICounter {
+    error NoChange(uint256 _val);
+
+    event NumberChanged(uint256 _val);
+
     uint256 public number;
 
     constructor(uint256 _initialValue) {
@@ -11,6 +15,10 @@ contract Counter is ICounter {
     }
 
     function setNumber(uint256 _newNumber) external {
+        if (number == _newNumber) {
+            revert NoChange(_newNumber);
+        }
+        emit NumberChanged(_newNumber);
         number = _newNumber;
     }
 
