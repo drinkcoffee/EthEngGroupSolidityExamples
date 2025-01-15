@@ -1,0 +1,16 @@
+[package]
+name = "tokens"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+uniswap-v3-sdk = { workspace = true }
+uniswap-sdk-core = { workspace = true }
+eyre = { workspace = true }
+
+alloy = { workspace = true }
+alloy-primitives = { workspace = true }
+alloy-sol-types = { workspace = true }
+tokio = { workspace = true }
+
+lib = { path = "../../crates/lib" }
