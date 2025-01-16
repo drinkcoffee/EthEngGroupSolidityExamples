@@ -10,9 +10,9 @@ contract Counter is ICounter {
 
     uint256 public number;
 
-    constructor(uint256 _initialValue) {
-        number = _initialValue;
-    }
+    // constructor(uint256 _initialValue) {
+    //     number = _initialValue;
+    // }
 
     function setNumber(uint256 _newNumber) external {
         if (number == _newNumber) {

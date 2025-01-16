@@ -1,14 +1,25 @@
 [workspace]
 resolver = "2"
-members = ["deploy"]
+members = [
+    "deploy", 
+    "bin",
+    "crates/counter",
+    "crates/lib",
+    ]
 
 [workspace.dependencies]
 alloy = { version = "0.9", features = [
     "full",
     "signer-keystore",
 ] }
+alloy-primitives = "0.8"
+alloy-sol-types = "0.8"
+
+
 eyre = "0.6.12"
 tokio = { version = "1.43.0", features = ["full"] }
 serde = "1.0"
 serde_derive = "1.0"
 toml = "0.8"
+
+counter = { path = "./crates/counter" }
