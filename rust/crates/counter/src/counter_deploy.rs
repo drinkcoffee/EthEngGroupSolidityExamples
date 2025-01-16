@@ -2,23 +2,33 @@
 //! Example of deploying a contract from an artifact using the `sol!` macro to Anvil and interacting
 //! with it.
 
-use alloy::{
-    network::EthereumWallet, primitives::U256, providers::ProviderBuilder,
-    signers::local::LocalSigner, sol, transports::http::reqwest::Url,
-};
+
+//TODO
+// use alloy::{
+//     network::EthereumWallet, primitives::U256, providers::ProviderBuilder,
+//     signers::local::LocalSigner, sol, transports::http::reqwest::Url,
+// };
+// use eyre::Result;
+// use serde::Deserialize;
+
+
+// use alloy::{
+//     primitives::{Address, U256},
+//     sol,
+// };
+
+// use eyre::Result;
+
+
 use eyre::Result;
-use serde::Deserialize;
-
-
+//use serde::Deserialize;
 use alloy::{
-    primitives::{Address, U256},
+    primitives::{Address, U256, FixedBytes},
     sol,
 };
-
-use eyre::Result;
-
-
 use lib::prelude::*;
+
+use crate::counter_deploy::Counter::CounterInstance;
 
 // Codegen from artifact.
 sol!(
@@ -28,12 +38,16 @@ sol!(
     "contracts/Counter.json"
 );
 
+
+
 pub struct CounterDeploy {
-    pub token_contract: CounterInstance<Transport, RootProvider>,
+    pub token_contract: //CounterInstance<Transport, RootProvider>,
+    CounterInstance<Transport, RootProvider>
 }
 
 impl CounterDeploy {
-    pub async fn new(provider: RootProvider) -> Result<Self> {
+    pub async fn new(provider: RootProvider, initial_value: U256) -> Result<Self> {
+//        let token_contract = Counter::deploy(&provider, initial_value).await?;
         let token_contract = Counter::deploy(&provider).await?;
         Ok(Self { token_contract })
     }
@@ -43,13 +57,13 @@ impl CounterDeploy {
         Ok(addr)
     }
 
-    pub async fn setNumber(&self, value: U256) -> Result<&FixedBytes<32>> {
+    pub async fn set_number(&self, value: U256) -> Result<FixedBytes<32>> {
         let builder = self.token_contract.setNumber(U256::from(value));
         let tx_hash = builder.send().await?.watch().await?;
         Ok(tx_hash)
     }
 
-    pub async fn increment(&self) -> Result<&FixedBytes<32>> {
+    pub async fn increment(&self) -> Result<FixedBytes<32>> {
         let builder = self.token_contract.increment();
         let tx_hash = builder.send().await?.watch().await?;
         Ok(tx_hash)
@@ -62,11 +76,11 @@ impl CounterDeploy {
         // return value must be accessed by index - as if it is an unnamed value.
         // If you prefer to use named return values, it is recommended to embed the Solidity code
         // directly in the `sol!` macro as shown in `deploy_from_contract.rs`.
-        let numnber = self.token_contract.number().call().await?._0;
-        Ok(number)
+        let value = builder.call().await?._0;
+        Ok(value)
     }
 
-    pub async fn getNumberPlus17(&self) -> Result<U256> {
+    pub async fn get_number_plus17(&self) -> Result<U256> {
         let res = self.token_contract.getNumberPlus17().call().await?._0;
         Ok(res)
     }

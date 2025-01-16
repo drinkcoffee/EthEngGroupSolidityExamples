@@ -1,15 +1,17 @@
 // Using a pre-existing contract
 
 use alloy::{
-    network::EthereumWallet, primitives::U256, providers::ProviderBuilder,
-    signers::local::LocalSigner, sol, transports::http::reqwest::Url,
+    network::EthereumWallet, providers::ProviderBuilder,
+    signers::local::LocalSigner, transports::http::reqwest::Url,
 };
 use eyre::Result;
-use serde::Deserialize;
+
+#[macro_use]
+extern crate load_file;
 
 
-use counter::Counter;
-use counterdeploy::CounterDeploy;
+use counter_existing::CounterExisting;
+use counter_deploy::CounterDeploy;
 
 
 #[tokio::main]
@@ -44,7 +46,7 @@ async fn main() -> Result<()> {
     println!("Number after increment: {}", number);
 
 
-    let existing = Counter::new(contract_address, provider).await?;
+    let existing = CounterExisting::new(contract_address, provider).await?;
     let contract_address2 = contract.address().await?;
     println!("Using existing at: {}", contract_address2);
 

@@ -1,11 +1,11 @@
 use alloy::{
-    primitives::{Address, U256},
+    primitives::{Address, U256, FixedBytes},
     sol,
 };
 
 use eyre::Result;
 
-use crate::counter::ICounter::ICounterInstance;
+use crate::counter_existing::ICounter::ICounterInstance;
 
 use lib::prelude::*;
 
@@ -22,11 +22,11 @@ sol! {
     }
 }
 
-pub struct Counter {
+pub struct CounterExisting {
     pub token_contract: ICounterInstance<Transport, RootProvider>,
 }
 
-impl Counter {
+impl CounterExisting {
     pub async fn new(token_address: Address, provider: RootProvider) -> Result<Self> {
         let token_contract = ICounter::new(token_address, provider);
         Ok(Self { token_contract })
@@ -37,13 +37,13 @@ impl Counter {
         Ok(addr)
     }
 
-    pub async fn setNumber(&self, value: U256) -> Result<&FixedBytes<32>> {
+    pub async fn set_number(&self, value: U256) -> Result<FixedBytes<32>> {
         let builder = self.token_contract.setNumber(U256::from(value));
         let tx_hash = builder.send().await?.watch().await?;
         Ok(tx_hash)
     }
 
-    pub async fn increment(&self) -> Result<&FixedBytes<32>> {
+    pub async fn increment(&self) -> Result<FixedBytes<32>> {
         let builder = self.token_contract.increment();
         let tx_hash = builder.send().await?.watch().await?;
         Ok(tx_hash)
@@ -56,16 +56,16 @@ impl Counter {
         // return value must be accessed by index - as if it is an unnamed value.
         // If you prefer to use named return values, it is recommended to embed the Solidity code
         // directly in the `sol!` macro as shown in `deploy_from_contract.rs`.
-        let numnber = self.token_contract.number().call().await?._0;
-        Ok(number)
+        let value = builder.call().await?._0;
+        Ok(value)
     }
 
-    pub async fn getNumberPlus17(&self) -> Result<U256> {
+    pub async fn get_number_plus17(&self) -> Result<U256> {
         let res = self.token_contract.getNumberPlus17().call().await?._0;
         Ok(res)
     }
 
-    pub async fn decimals(&self) -> Result<U256> {
+    pub async fn get_number_plus17a(&self) -> Result<U256> {
         let res = self.token_contract.getNumberPlus17a().call().await?.numPlus17;
         Ok(res)
     }

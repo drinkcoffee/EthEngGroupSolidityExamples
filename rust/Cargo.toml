@@ -2,8 +2,9 @@
 resolver = "2"
 members = [
     "deploy", 
-    "use-existing",
-    "crates/counterex",
+    "bin",
+    "crates/counter",
+    "crates/lib",
     ]
 
 [workspace.dependencies]
@@ -20,3 +21,5 @@ tokio = { version = "1.43.0", features = ["full"] }
 serde = "1.0"
 serde_derive = "1.0"
 toml = "0.8"
+
+counter = { path = "./crates/counter" }
