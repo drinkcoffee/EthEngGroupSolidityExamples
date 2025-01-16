@@ -1,18 +1,16 @@
 // Using a pre-existing contract
 
 use alloy::{
-    network::EthereumWallet, providers::ProviderBuilder,
-    signers::local::LocalSigner, transports::http::reqwest::Url,
+    network::EthereumWallet, providers::ProviderBuilder, signers::local::LocalSigner,
+    transports::http::reqwest::Url,
 };
 use eyre::Result;
 
 #[macro_use]
 extern crate load_file;
 
-
-use counter_existing::CounterExisting;
 use counter_deploy::CounterDeploy;
-
+use counter_existing::CounterExisting;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -30,7 +28,6 @@ async fn main() -> Result<()> {
         .wallet(wallet)
         .on_http(Url::parse("https://rpc.testnet.immutable.com")?);
 
-
     let val = 42;
 
     let contract = CounterDeploy::new(provider, 42).await?;
@@ -44,7 +41,6 @@ async fn main() -> Result<()> {
     println!("Increment tx hash: {}", txhash);
     let number = contract.number().await?;
     println!("Number after increment: {}", number);
-
 
     let existing = CounterExisting::new(contract_address, provider).await?;
     let contract_address2 = contract.address().await?;
