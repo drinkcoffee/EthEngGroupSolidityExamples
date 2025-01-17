@@ -1,13 +1,14 @@
 use alloy::{
-    primitives::{Address, U256, FixedBytes},
+    primitives::{Address, FixedBytes, U256},
     sol,
+    transports::http::ReqwestTransport,
 };
 
+use alloy_provider::ReqwestProvider;
+use alloy_transport::{BoxTransport, Transport};
 use eyre::Result;
 
 use crate::counter_existing::ICounter::ICounterInstance;
-
-use lib::prelude::*;
 
 // Counter interface: not getNumberPlus17 and number do not have defined return values.
 sol! {
@@ -22,12 +23,16 @@ sol! {
     }
 }
 
-pub struct CounterExisting {
-    pub token_contract: ICounterInstance<Transport, RootProvider>,
+pub struct CounterExisting<T, P> {
+    pub token_contract: ICounterInstance<T, P>,
 }
 
-impl CounterExisting {
-    pub async fn new(token_address: Address, provider: RootProvider) -> Result<Self> {
+impl<T, P> CounterExisting<T, P>
+where
+    T: Transport + Clone,
+    P: alloy_provider::Provider<T>,
+{
+    pub async fn new(token_address: Address, provider: P) -> Result<Self> {
         let token_contract = ICounter::new(token_address, provider);
         Ok(Self { token_contract })
     }
@@ -66,7 +71,12 @@ impl CounterExisting {
     }
 
     pub async fn get_number_plus17a(&self) -> Result<U256> {
-        let res = self.token_contract.getNumberPlus17a().call().await?.numPlus17;
+        let res = self
+            .token_contract
+            .getNumberPlus17a()
+            .call()
+            .await?
+            .numPlus17;
         Ok(res)
     }
 }

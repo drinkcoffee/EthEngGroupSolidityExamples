@@ -17,13 +17,15 @@
 
 // use eyre::Result;
 
+use alloy_provider::ReqwestProvider;
+use alloy_transport::{BoxTransport, Transport};
 use eyre::Result;
 //use serde::Deserialize;
 use alloy::{
     primitives::{Address, FixedBytes, U256},
     sol,
+    transports::http::ReqwestTransport,
 };
-use lib::prelude::*;
 
 use crate::counter_deploy::Counter::CounterInstance;
 
@@ -35,12 +37,17 @@ sol!(
     "contracts/Counter.json"
 );
 
-pub struct CounterDeploy {
-    pub token_contract: CounterInstance<Transport, RootProvider>,
+pub struct CounterDeploy<T, P> {
+    pub token_contract: CounterInstance<T, P>,
 }
 
-impl CounterDeploy {
-    pub async fn new(provider: RootProvider, _initial_value: U256) -> Result<Self> {
+//        <T as Table>::Value: Default,
+impl<T, P> CounterDeploy<T, P>
+where
+    T: Transport + Clone,
+    P: alloy_provider::Provider<T>,
+{
+    pub async fn new(provider: P, _initial_value: U256) -> Result<Self> {
         //        let token_contract = Counter::deploy(&provider, initial_value).await?;
         let token_contract = Counter::deploy(provider).await?;
         Ok(Self { token_contract })

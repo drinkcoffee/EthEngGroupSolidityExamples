@@ -1,10 +1,8 @@
 [workspace]
 resolver = "2"
 members = [
-    "deploy", 
     "bin",
-    "crates/counter",
-    "crates/lib",
+    "crates/*",
     ]
 
 [workspace.dependencies]
@@ -12,7 +10,9 @@ alloy = { version = "0.9", features = [
     "full",
     "signer-keystore",
 ] }
+alloy-transport = "0.9.2"
 alloy-primitives = "0.8"
+alloy-provider = { version = "0.9.2", default-features = false, features = ["reqwest"] }
 alloy-sol-types = "0.8"
 
 
