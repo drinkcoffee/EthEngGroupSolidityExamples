@@ -2,30 +2,12 @@
 //! Example of deploying a contract from an artifact using the `sol!` macro to Anvil and interacting
 //! with it.
 
-//TODO
-// use alloy::{
-//     network::EthereumWallet, primitives::U256, providers::ProviderBuilder,
-//     signers::local::LocalSigner, sol, transports::http::reqwest::Url,
-// };
-// use eyre::Result;
-// use serde::Deserialize;
-
-// use alloy::{
-//     primitives::{Address, U256},
-//     sol,
-// };
-
-// use eyre::Result;
-
-use alloy_provider::ReqwestProvider;
-use alloy_transport::{BoxTransport, Transport};
-use eyre::Result;
-//use serde::Deserialize;
 use alloy::{
     primitives::{Address, FixedBytes, U256},
     sol,
-    transports::http::ReqwestTransport,
 };
+use alloy_transport::Transport;
+use eyre::Result;
 
 use crate::counter_deploy::Counter::CounterInstance;
 
@@ -41,14 +23,12 @@ pub struct CounterDeploy<T, P> {
     pub token_contract: CounterInstance<T, P>,
 }
 
-//        <T as Table>::Value: Default,
 impl<T, P> CounterDeploy<T, P>
 where
     T: Transport + Clone,
     P: alloy_provider::Provider<T>,
 {
     pub async fn new(provider: P, _initial_value: U256) -> Result<Self> {
-        //        let token_contract = Counter::deploy(&provider, initial_value).await?;
         let token_contract = Counter::deploy(provider).await?;
         Ok(Self { token_contract })
     }

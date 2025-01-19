@@ -1,19 +1,18 @@
 // Using a pre-existing contract
 
-use alloy::primitives::U256;
-use alloy::providers::ReqwestProvider;
+use std::str::FromStr;
+
 use alloy::{
-    network::EthereumWallet, providers::ProviderBuilder, signers::local::LocalSigner,
-    transports::http::reqwest::Url,
+    network::EthereumWallet, primitives::Address, providers::ProviderBuilder,
+    signers::local::LocalSigner, transports::http::reqwest::Url,
 };
-use eyre::Result;
 use serde::Deserialize;
 
 #[macro_use]
 extern crate load_file;
 
-use counter::CounterDeploy;
 use counter::CounterExisting;
+use tracing::info;
 
 #[derive(Deserialize)]
 struct Config {
@@ -22,9 +21,16 @@ struct Config {
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> eyre::Result<()> {
+    tracing_subscriber::fmt::init();
+
+    let args: Vec<_> = std::env::args().collect();
+    let contract_address = args
+        .get(1)
+        .ok_or(eyre::eyre!("No contract address provided"))?;
+
     // Read the configuration.
-    let config = toml::from_str::<Conflg>(load_str!("../../../config.toml"))?;
+    let config = toml::from_str::<Config>(load_str!("../../../config.toml"))?;
 
     // Create the wallet.
     let pw = load_str!(config.pw_path.as_str()).trim();
@@ -37,23 +43,19 @@ async fn main() -> Result<()> {
         .wallet(wallet)
         .on_http(Url::parse("https://rpc.testnet.immutable.com")?);
 
-    let val = 42;
+    // Connect to the existing contract.
+    let contract_address = Address::from_str(contract_address)?;
+    let contract = CounterExisting::new(contract_address, provider).await?;
 
-    let contract = CounterExisting::new(*contract_address, provider).await?;
-    let contract_address2 = contract.address().await?;
-    println!("Using existing at: {}", contract_address2);
-
+    // Use th contract.
     let number = contract.number().await?;
-    println!("Number read via existing: {}", number);
+    info!("Number read via existing: {}", number);
 
     let txhash = contract.increment().await?;
-    println!("Increment tx hash: {}", txhash);
+    info!("Increment tx hash: {}", txhash);
 
     let number = contract.number().await?;
-    println!("Number read via existing: {}", number);
-
-    let number = contract.number().await?;
-    println!("Number read via deploy: {}", number);
+    info!("Number read via existing: {}", number);
 
     Ok(())
 }

@@ -5,13 +5,13 @@ use alloy::{
     network::EthereumWallet, providers::ProviderBuilder, signers::local::LocalSigner,
     transports::http::reqwest::Url,
 };
-use eyre::Result;
 use serde::Deserialize;
 
 #[macro_use]
 extern crate load_file;
 
 use counter::CounterDeploy;
+use tracing::info;
 
 #[derive(Deserialize)]
 struct Config {
@@ -20,7 +20,9 @@ struct Config {
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> eyre::Result<()> {
+    tracing_subscriber::fmt::init();
+
     // Read the configuration.
     let config = toml::from_str::<Config>(load_str!("../../../config.toml"))?;
 
@@ -35,17 +37,18 @@ async fn main() -> Result<()> {
         .wallet(wallet)
         .on_http(Url::parse("https://rpc.testnet.immutable.com")?);
 
+    // Deploy the contract.
     let contract = CounterDeploy::new(provider, U256::from(42u64)).await?;
     let contract_address = contract.address().await?;
-    println!("Deployed to: {}", contract_address);
+    info!("Deployed to: {}", contract_address);
 
+    // Use the contract.
     let number = contract.number().await?;
-    println!("Number initial value: {}", number);
-
+    info!("Number initial value: {}", number);
     let txhash = contract.increment().await?;
-    println!("Increment tx hash: {}", txhash);
+    info!("Increment tx hash: {}", txhash);
     let number = contract.number().await?;
-    println!("Number after increment: {}", number);
+    info!("Number after increment: {}", number);
 
     Ok(())
 }

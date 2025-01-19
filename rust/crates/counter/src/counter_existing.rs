@@ -1,11 +1,9 @@
 use alloy::{
     primitives::{Address, FixedBytes, U256},
     sol,
-    transports::http::ReqwestTransport,
 };
 
-use alloy_provider::ReqwestProvider;
-use alloy_transport::{BoxTransport, Transport};
+use alloy_transport::Transport;
 use eyre::Result;
 
 use crate::counter_existing::ICounter::ICounterInstance;

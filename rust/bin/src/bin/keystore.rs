@@ -1,12 +1,15 @@
 use std::fs::read_to_string;
 
 use alloy::{hex, signers::local::LocalSigner};
-use eyre::Result;
 use rand::thread_rng;
 use tempfile::tempdir;
+use tracing::info;
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> eyre::Result<()> {
+    tracing_subscriber::fmt::init();
+
+    // Create a temporary directory to store the keystore file.
     let dir = tempdir()?;
     let mut rng = thread_rng();
 
@@ -24,8 +27,7 @@ async fn main() -> Result<()> {
         LocalSigner::encrypt_keystore(&dir, &mut rng, private_key, password.clone(), None)?;
 
     let keystore_file_path = dir.path().join(file_path);
-
-    println!(
+    info!(
         "Wrote keystore for {} to {:?}",
         wallet.address(),
         keystore_file_path
@@ -34,19 +36,20 @@ async fn main() -> Result<()> {
     // Read the keystore file back.
     let recovered_wallet = LocalSigner::decrypt_keystore(keystore_file_path.clone(), password)?;
 
-    println!(
+    info!(
         "Read keystore from {:?}, recovered address: {}",
         keystore_file_path,
         recovered_wallet.address()
     );
 
     // Assert that the address of the original key and the recovered key are the same.
-    assert_eq!(wallet.address(), recovered_wallet.address());
+    if wallet.address() != recovered_wallet.address() {
+        eyre::bail!("Addresses do not match");
+    }
 
     // Display the contents of the keystore file.
     let keystore_contents = read_to_string(keystore_file_path)?;
-
-    println!("Keystore file contents: {keystore_contents:?}");
+    info!("Keystore file contents: {keystore_contents:?}");
 
     Ok(())
 }
