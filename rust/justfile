@@ -1,3 +1,11 @@
+set dotenv-load
+
 deploy:
-    cargo run -p deploy
+    cargo run -p bin --bin new_contract
+
+interact contract_address:
+    cargo run -p bin --bin existing_contract {{contract_address}}
+
+keystore:
+    cargo run -p bin --bin keystore
 
