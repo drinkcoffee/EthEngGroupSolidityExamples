@@ -1,3 +1,5 @@
+//! Interact with an existing Counter contract
+
 use alloy::{
     primitives::{Address, FixedBytes, U256},
     sol,
@@ -5,14 +7,21 @@ use alloy::{
 
 use alloy_transport::Transport;
 use eyre::Result;
+use futures_util::StreamExt;
+use ICounter::NumberChanged;
 
 use crate::counter_existing::ICounter::ICounterInstance;
 
 // Counter interface: not getNumberPlus17 and number do not have defined return values.
 sol! {
+    // We need the bytecode for event streams.
     #[allow(missing_docs)]
     #[sol(rpc)]
     interface ICounter {
+        error NoChange(uint256 _val);
+        #[derive(Debug)]
+        event NumberChanged(uint256 _val);
+
         function setNumber(uint256 _newNumber) external;
         function increment() external;
         function number() external view returns(uint256);
@@ -21,6 +30,7 @@ sol! {
     }
 }
 
+#[derive(Clone)]
 pub struct CounterExisting<T, P> {
     pub token_contract: ICounterInstance<T, P>,
 }
@@ -76,5 +86,15 @@ where
             .await?
             .numPlus17;
         Ok(res)
+    }
+
+    pub async fn wait_for_event(&self) -> Result<NumberChanged> {
+        let event_filter = self.token_contract.NumberChanged_filter().watch().await?;
+        let mut event_stream = event_filter.into_stream();
+        let a = event_stream
+            .next()
+            .await
+            .ok_or(eyre::eyre!("Event stream provided empty event"))?;
+        Ok(a?.0)
     }
 }

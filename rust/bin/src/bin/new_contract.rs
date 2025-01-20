@@ -1,4 +1,4 @@
-// Deploy a new contract.
+//! Deploy a new contract
 
 use alloy::primitives::U256;
 use alloy::{

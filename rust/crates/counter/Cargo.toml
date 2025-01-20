@@ -12,4 +12,5 @@ alloy-sol-types = { workspace = true }
 alloy-provider = { workspace = true }
 alloy-transport = { workspace = true }
 tokio = { workspace = true }
+futures-util.workspace = true
 
