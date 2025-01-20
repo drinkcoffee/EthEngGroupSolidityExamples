@@ -38,6 +38,7 @@ async fn main() -> eyre::Result<()> {
         .on_http(Url::parse("https://rpc.testnet.immutable.com")?);
 
     // Deploy the contract.
+    info!("Deploying contract");
     let contract = CounterDeploy::new(provider, U256::from(42u64)).await?;
     let contract_address = contract.address().await?;
     info!("Deployed to: {}", contract_address);
