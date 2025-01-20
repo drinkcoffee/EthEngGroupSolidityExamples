@@ -1,3 +1,5 @@
+//! Generating a Keystore File
+
 use std::fs::read_to_string;
 
 use alloy::{hex, signers::local::LocalSigner};

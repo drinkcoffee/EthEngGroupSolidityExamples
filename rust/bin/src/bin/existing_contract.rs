@@ -1,10 +1,13 @@
-// Using a pre-existing contract
+//! Using a pre-existing contract
 
 use std::str::FromStr;
 
 use alloy::{
-    network::EthereumWallet, primitives::Address, providers::ProviderBuilder,
-    signers::local::LocalSigner, transports::http::reqwest::Url,
+    network::EthereumWallet,
+    primitives::{Address, U256},
+    providers::ProviderBuilder,
+    signers::local::LocalSigner,
+    transports::http::reqwest::Url,
 };
 use serde::Deserialize;
 
@@ -47,6 +50,16 @@ async fn main() -> eyre::Result<()> {
     let contract_address = Address::from_str(contract_address)?;
     let contract = CounterExisting::new(contract_address, provider).await?;
 
+    let event_contract = contract.clone();
+    tokio::spawn(async move {
+        while let Ok(event) = event_contract.wait_for_event().await {
+            info!("Event found: Number changed: {}", event._val);
+        }
+    });
+    if let Err(err) = contract.set_number(U256::from(100u64)).await {
+        info!("Error : {err:#?}");
+    }
+
     // Use th contract.
     let number = contract.number().await?;
     info!("Number read via existing: {}", number);
@@ -56,6 +69,10 @@ async fn main() -> eyre::Result<()> {
 
     let number = contract.number().await?;
     info!("Number read via existing: {}", number);
+
+    //if let Err(err) = contract.set_number(U256::from(100u64)).await {
+    //    println!("Error : {err:#?}");
+    //}
 
     Ok(())
 }

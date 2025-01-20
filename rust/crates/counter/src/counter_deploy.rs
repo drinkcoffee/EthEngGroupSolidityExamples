@@ -1,6 +1,4 @@
-//! From https://github.com/alloy-rs/examples/blob/main/examples/contracts/examples/deploy_from_artifact.rs
-//! Example of deploying a contract from an artifact using the `sol!` macro to Anvil and interacting
-//! with it.
+//! Deploy a new Counter contract
 
 use alloy::{
     primitives::{Address, FixedBytes, U256},
