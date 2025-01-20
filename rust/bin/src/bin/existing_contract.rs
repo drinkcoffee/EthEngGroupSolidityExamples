@@ -60,19 +60,18 @@ async fn main() -> eyre::Result<()> {
         info!("Error : {err:#?}");
     }
 
-    // Use th contract.
+    // Use the contract.
     let number = contract.number().await?;
     info!("Number read via existing: {}", number);
-
     let txhash = contract.increment().await?;
     info!("Increment tx hash: {}", txhash);
 
+    // Get expected error.
     let number = contract.number().await?;
     info!("Number read via existing: {}", number);
-
-    //if let Err(err) = contract.set_number(U256::from(100u64)).await {
-    //    println!("Error : {err:#?}");
-    //}
+    if let Err(err) = contract.set_number(number).await {
+        info!("Expected Error: {err:#?}");
+    }
 
     Ok(())
 }
