@@ -27,12 +27,14 @@ struct Config {
 async fn main() -> eyre::Result<()> {
     tracing_subscriber::fmt::init();
 
+    // Read the args.
     let args: Vec<_> = std::env::args().collect();
     let contract_address = args
         .get(1)
         .ok_or(eyre::eyre!("No contract address provided"))?;
 
     // Read the configuration.
+    info!("Reading configuration");
     let config = toml::from_str::<Config>(load_str!("../../../config.toml"))?;
 
     // Create the wallet.
@@ -41,6 +43,8 @@ async fn main() -> eyre::Result<()> {
     let wallet = EthereumWallet::new(signer);
 
     // Create RPC provider.
+    let url = Url::parse("https://rpc.testnet.immutable.com")?;
+    info!("Creating RPC provider for: {url}");
     let provider = ProviderBuilder::new()
         .with_recommended_fillers()
         .wallet(wallet)
@@ -60,15 +64,20 @@ async fn main() -> eyre::Result<()> {
         }
     });
     // Set the number to trigger an event.
+    info!("Calling Counter::set_number(100)");
     contract.set_number(U256::from(100u64)).await?;
 
     // Use the contract.
+    info!("Calling Counter::number()");
     let number = contract.number().await?;
     info!("Number read: {}", number);
+
+    info!("Calling Counter::increment()");
     let txhash = contract.increment().await?;
     info!("Increment tx hash: {}", txhash);
 
     // Get expected error.
+    info!("Calling Counter::set_number(existing)");
     let number = contract.number().await?;
     if let Err(err) = contract.set_number(number).await {
         info!("Expected Error: {err:#?}");
