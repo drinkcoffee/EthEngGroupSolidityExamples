@@ -48,7 +48,7 @@ pub struct CounterDeploy {
 impl CounterDeploy {
     pub async fn new(provider: RootProvider, initial_value: U256) -> Result<Self> {
 //        let token_contract = Counter::deploy(&provider, initial_value).await?;
-        let token_contract = Counter::deploy(&provider).await?;
+        let token_contract = Counter::deploy(provider).await?;
         Ok(Self { token_contract })
     }
 
