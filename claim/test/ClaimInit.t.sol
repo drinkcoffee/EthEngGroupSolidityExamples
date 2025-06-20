@@ -24,7 +24,7 @@ contract ClaimInitTest is ClaimBaseTest {
         assertEq(claim.nextSpareClaimableTokenSlot(), 1, "nextSpareClaimableTokenSlot should be 1");
         assertEq(claim.firstInUseClaimableTokenSlot(), 1, "firstInUseClaimableTokenSlot should be 1");
         assertEq(address(claim.checkin()), address(checkin), "solutions");
-        assertEq(claim.version(), 0, "version");
+        assertEq(claim.version(), 1, "version");
         assertEq(claim.claimedDay(player1), 0, "claimedDay");
 
         (address erc1155Contract, uint256 tokenId, uint256 balance, uint256 percentage) = claim.claimableTokens(1);

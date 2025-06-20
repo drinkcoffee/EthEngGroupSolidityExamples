@@ -63,7 +63,7 @@ contract ClaimOperationalTest is ClaimBaseTest {
 
     function setUpFakeCheckin() private {
         address upgradeAdmin = makeAddr("UpgradeAdmin");
-        Checkin impl = new Checkin();
+        FakeCheckin impl = new FakeCheckin();
         bytes memory initData = abi.encodeWithSelector(
             Checkin.initialize.selector, address(0), address(0), upgradeAdmin);
         ERC1967Proxy proxy = new ERC1967Proxy(address(impl), initData);

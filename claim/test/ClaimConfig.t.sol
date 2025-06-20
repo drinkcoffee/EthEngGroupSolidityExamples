@@ -52,7 +52,7 @@ contract ClaimConfigTest is ClaimBaseTest {
     function testUpgradeToV1() public {
         Claim v1Impl = new Claim();
         bytes memory initData = abi.encodeWithSelector(Claim.upgradeStorage.selector, bytes(""));
-        vm.expectRevert(abi.encodeWithSelector(Claim.CanNotUpgradeToLowerOrSameVersion.selector, 0));
+        vm.expectRevert(abi.encodeWithSelector(Claim.CanNotUpgradeToLowerOrSameVersion.selector, 1));
         vm.prank(configAdmin);
         claim.upgradeToAndCall(address(v1Impl), initData);
     }
