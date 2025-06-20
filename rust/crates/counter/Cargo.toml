@@ -9,6 +9,8 @@ eyre = { workspace = true }
 alloy = { workspace = true }
 alloy-primitives = { workspace = true }
 alloy-sol-types = { workspace = true }
+alloy-provider = { workspace = true }
+alloy-transport = { workspace = true }
 tokio = { workspace = true }
+futures-util.workspace = true
 
-lib = { path = "../../crates/lib" }

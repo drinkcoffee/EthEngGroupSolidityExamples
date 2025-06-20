@@ -1,19 +1,27 @@
+//! Interact with an existing Counter contract
+
 use alloy::{
-    primitives::{Address, U256, FixedBytes},
+    primitives::{Address, FixedBytes, U256},
     sol,
 };
 
+use alloy_transport::Transport;
 use eyre::Result;
+use futures_util::StreamExt;
+use ICounter::NumberChanged;
 
 use crate::counter_existing::ICounter::ICounterInstance;
 
-use lib::prelude::*;
-
 // Counter interface: not getNumberPlus17 and number do not have defined return values.
 sol! {
+    // We need the bytecode for event streams.
     #[allow(missing_docs)]
     #[sol(rpc)]
     interface ICounter {
+        error NoChange(uint256 _val);
+        #[derive(Debug)]
+        event NumberChanged(uint256 _val);
+
         function setNumber(uint256 _newNumber) external;
         function increment() external;
         function number() external view returns(uint256);
@@ -22,12 +30,17 @@ sol! {
     }
 }
 
-pub struct CounterExisting {
-    pub token_contract: ICounterInstance<Transport, RootProvider>,
+#[derive(Clone)]
+pub struct CounterExisting<T, P> {
+    pub token_contract: ICounterInstance<T, P>,
 }
 
-impl CounterExisting {
-    pub async fn new(token_address: Address, provider: RootProvider) -> Result<Self> {
+impl<T, P> CounterExisting<T, P>
+where
+    T: Transport + Clone,
+    P: alloy_provider::Provider<T>,
+{
+    pub async fn new(token_address: Address, provider: P) -> Result<Self> {
         let token_contract = ICounter::new(token_address, provider);
         Ok(Self { token_contract })
     }
@@ -66,7 +79,22 @@ impl CounterExisting {
     }
 
     pub async fn get_number_plus17a(&self) -> Result<U256> {
-        let res = self.token_contract.getNumberPlus17a().call().await?.numPlus17;
+        let res = self
+            .token_contract
+            .getNumberPlus17a()
+            .call()
+            .await?
+            .numPlus17;
         Ok(res)
+    }
+
+    pub async fn wait_for_event(&self) -> Result<NumberChanged> {
+        let event_filter = self.token_contract.NumberChanged_filter().watch().await?;
+        let mut event_stream = event_filter.into_stream();
+        let a = event_stream
+            .next()
+            .await
+            .ok_or(eyre::eyre!("Event stream provided empty event"))?;
+        Ok(a?.0)
     }
 }

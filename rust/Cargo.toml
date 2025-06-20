@@ -1,10 +1,8 @@
 [workspace]
 resolver = "2"
 members = [
-    "deploy", 
     "bin",
-    "crates/counter",
-    "crates/lib",
+    "crates/*",
     ]
 
 [workspace.dependencies]
@@ -12,14 +10,18 @@ alloy = { version = "0.9", features = [
     "full",
     "signer-keystore",
 ] }
+alloy-transport = "0.9.2"
 alloy-primitives = "0.8"
+alloy-provider = { version = "0.9.2", default-features = false, features = ["reqwest"] }
 alloy-sol-types = "0.8"
-
 
 eyre = "0.6.12"
 tokio = { version = "1.43.0", features = ["full"] }
 serde = "1.0"
 serde_derive = "1.0"
 toml = "0.8"
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.18", features = ["fmt", "env-filter"] }
+futures-util = "0.3"
 
 counter = { path = "./crates/counter" }
