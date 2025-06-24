@@ -101,8 +101,8 @@ contract Claim is AccessControlEnumerableUpgradeable, PausableUpgradeable, Passp
     struct ClaimableToken {
         address erc1155Contract;
         uint256 tokenId;
-        uint256 balance;
-        uint256 percentage; // Percentage to two decimal places. Hence 23.45% is 2345
+        uint256 balance;    // Number available for claim.
+        uint256 percentage; // Percentage to two decimal places. Hence 23.45% is 2345.
     }
     mapping (uint256 => ClaimableToken) public claimableTokens;
 
@@ -266,7 +266,7 @@ contract Claim is AccessControlEnumerableUpgradeable, PausableUpgradeable, Passp
         // Calculate an on-chain random number.
         uint256 randomValue = _generateRandom(block.number - 1);
 
-        // Select a NFT based on the random value.
+        // Select an NFT based on the random value.
         (address nftContract, uint256 tokenId) = _determineRandomNft(randomValue);
 
         // Transfer an NFT to the game player.

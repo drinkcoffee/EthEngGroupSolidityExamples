@@ -104,11 +104,6 @@ contract PassportCheck is Initializable, AccessControlEnumerableUpgradeable {
         emit WalletAllowlistChanged(codeHash, walletAddr, false);
     }
 
-
-
-
-
-
     /// @notice storage gap for additional variables for upgrades
     // slither-disable-start unused-state
     // solhint-disable-next-line var-name-mixedcase
