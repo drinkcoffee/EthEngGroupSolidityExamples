@@ -75,9 +75,7 @@ contract Checkin is
     }
 
     /**
-     * Log the first day the game was played. 
-     * Subsequent calls to this function are used to determine the number of people playing the game,
-     * who are using Passport login.
+     * Log the day the game was played.
      *
      * @param _gameDay The day since the game epoch start.
      */
