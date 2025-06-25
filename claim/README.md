@@ -1,7 +1,8 @@
+# Checkin and Claim contracts
+
+This directory contains code for a check-in and claim contract system.
 
 
-
-## Foundry
 
 
 ## Dependencies 
