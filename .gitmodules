@@ -31,3 +31,9 @@
 [submodule "claim/lib/openzeppelin-contracts"]
 	path = claim/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "eip7702/lib/forge-std"]
+	path = eip7702/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "eip7702/lib/openzeppelin-contracts"]
+	path = eip7702/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
