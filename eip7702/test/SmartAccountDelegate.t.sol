@@ -5,6 +5,8 @@ import {Test} from "forge-std/Test.sol";
 import {VmSafe} from "forge-std/Vm.sol";
 import {SmartAccountDelegate} from "../src/SmartAccountDelegate.sol";
 import {FixedSupplyERC20, ERC20} from "../src/FixedSupplyERC20.sol";
+import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
+
 
 contract SmartAccountDelegateTest is Test {
 
@@ -17,10 +19,9 @@ contract SmartAccountDelegateTest is Test {
     // Alice's address and private key (EOA with no initial contract code).
     address payable alice;
     uint256 alicePrivateKey;
-
-    // Bob's address and private key (EOA with no initial contract code).
     address bob;
     uint256 bobPrivateKey;
+    address bundler;
 
     // The contract that Alice will delegate execution to.
     SmartAccountDelegate public smartAccountTemplate;
@@ -33,6 +34,7 @@ contract SmartAccountDelegateTest is Test {
         (aliceAddr, alicePrivateKey) = makeAddrAndKey("Alice");
         alice = payable(aliceAddr);
         (bob, bobPrivateKey) = makeAddrAndKey("Bob");
+        bundler = makeAddr("Bundler");
 
         // Deploy the delegation contract (Alice will delegate calls to this contract).
         smartAccountTemplate = new SmartAccountDelegate();
@@ -58,20 +60,20 @@ contract SmartAccountDelegateTest is Test {
     function testSignThenAttachDelegationWithCalls() public {
         testSignThenAttachDelegation();
 
-        SmartAccountDelegate.Call[] memory calls = createCalls();
+        SmartAccountDelegate.Call[] memory calls = _createCalls();
  
         // As Alice, execute the transaction via Alice's assigned contract.
         vm.prank(alice);
         SmartAccountDelegate(alice).execute(calls);
  
-        // Verify Bob successfully received 10 tokens.
-        assertEq(token.balanceOf(bob), 10);
+        // Verify Bob successfully received AMOUNT tokens.
+        assertEq(token.balanceOf(bob), AMOUNT);
     }
 
     function testSignThenAttachDelegationWithCallsBadAuth() public {
         testSignThenAttachDelegation();
 
-        SmartAccountDelegate.Call[] memory calls = createCalls();
+        SmartAccountDelegate.Call[] memory calls = _createCalls();
  
         // As Bob, execute the transaction via Alice's assigned contract.
         vm.prank(bob);
@@ -93,20 +95,20 @@ contract SmartAccountDelegateTest is Test {
     function testSignAndAttachDelegationWithCalls() public {
         testSignAndAttachDelegation();
 
-        SmartAccountDelegate.Call[] memory calls = createCalls();
+        SmartAccountDelegate.Call[] memory calls = _createCalls();
   
         // As Alice, execute the transaction via Alice's assigned contract.
         vm.prank(alice);
         SmartAccountDelegate(alice).execute(calls);
  
-        // Verify Bob successfully received 10 tokens.
-        vm.assertEq(token.balanceOf(bob), 10);
+        // Verify Bob successfully received AMOUNT tokens.
+        vm.assertEq(token.balanceOf(bob), AMOUNT);
     }
 
     function testSignAndAttachDelegationWithCallsBadAuth() public {
         testSignAndAttachDelegation();
 
-        SmartAccountDelegate.Call[] memory calls = createCalls();
+        SmartAccountDelegate.Call[] memory calls = _createCalls();
   
         // As Bob, execute the transaction via Alice's assigned contract.
         vm.prank(bob);
@@ -114,7 +116,33 @@ contract SmartAccountDelegateTest is Test {
         SmartAccountDelegate(alice).execute(calls);
     }
 
-    function createCalls() private view returns (SmartAccountDelegate.Call[] memory) {
+    function testBundlerCallSubmission() public {
+        testSignAndAttachDelegation();
+
+        SmartAccountDelegate.Call[] memory calls = _createCalls();
+        uint256 aliceNonce = vm.getNonce(alice);
+        bytes memory signature = _sign(alicePrivateKey, aliceNonce, calls);
+
+        vm.prank(bundler);
+        SmartAccountDelegate(alice).execute(calls, signature);
+        vm.assertEq(token.balanceOf(bob), AMOUNT);
+    }
+
+    function testBundlerCallSubmissionBadSignature() public {
+        testSignAndAttachDelegation();
+
+        SmartAccountDelegate.Call[] memory calls = _createCalls();
+        uint256 aliceNonce = vm.getNonce(alice);
+        // Signing with Bob's key will cause in incorrect signature
+        bytes memory signature = _sign(bobPrivateKey, aliceNonce, calls);
+
+        vm.prank(bundler);
+        vm.expectRevert(abi.encodeWithSelector(SmartAccountDelegate.InvalidSignature.selector));
+        SmartAccountDelegate(alice).execute(calls, signature);
+    }
+
+
+    function _createCalls() private view returns (SmartAccountDelegate.Call[] memory) {
         // Construct a single transaction call: Transfer tokens to Bob.
         SmartAccountDelegate.Call[] memory calls = new SmartAccountDelegate.Call[](1);
         bytes memory data = abi.encodeCall(ERC20.transfer, (bob, AMOUNT));
@@ -122,4 +150,17 @@ contract SmartAccountDelegateTest is Test {
         return calls;
     }
 
+    function _sign(uint256 _signerPrivateKey, uint256 _signersNonce, SmartAccountDelegate.Call[] memory _calls) internal pure returns (bytes memory) {
+        // Encode calls.
+        bytes memory encodedCalls;
+        for (uint256 i = 0; i < _calls.length; i++) {
+            encodedCalls = abi.encodePacked(encodedCalls, _calls[i].to, _calls[i].value, _calls[i].data);
+        }
+        bytes32 digest = keccak256(abi.encodePacked(_signersNonce, encodedCalls));
+        // Add Eth signature format.
+        bytes32 toBeSignedHash = MessageHashUtils.toEthSignedMessageHash(digest);
+        // Sign the to be signed value
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(_signerPrivateKey, toBeSignedHash);
+        return abi.encodePacked(r, s, v);
+    }
 }

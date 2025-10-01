@@ -38,48 +38,48 @@ contract SmartAccountDelegate layout at 2**0x8A + 0xFACE0FACE {
 
     /**
      * @notice Executes a batch of calls using an off–chain signature.
-     * @param calls An array of Call structs containing destination, value, and call data.
-     * @param signature The ECDSA signature over the current nonce and the call data, 
+     * @param _calls An array of Call structs containing destination, value, and call data.
+     * @param _signature The ECDSA signature over the current nonce and the call data, 
      *         created using the owners private key.
      */
-    function execute(Call[] calldata calls, bytes calldata signature) external payable {
+    function execute(Call[] calldata _calls, bytes calldata _signature) external payable {
         // Compute the digest that should have been signed.
         bytes memory encodedCalls;
-        for (uint256 i = 0; i < calls.length; i++) {
-            encodedCalls = abi.encodePacked(encodedCalls, calls[i].to, calls[i].value, calls[i].data);
+        for (uint256 i = 0; i < _calls.length; i++) {
+            encodedCalls = abi.encodePacked(encodedCalls, _calls[i].to, _calls[i].value, _calls[i].data);
         }
         bytes32 digest = keccak256(abi.encodePacked(nonce, encodedCalls));
 
         bytes32 candidateEthSignature = MessageHashUtils.toEthSignedMessageHash(digest);
 
         // Recover the signer from the provided signature.
-        address recovered = ECDSA.recover(candidateEthSignature, signature);
+        address recovered = ECDSA.recover(candidateEthSignature, _signature);
         require(recovered == address(this), InvalidSignature());
 
-        _executeBatch(calls);
+        _executeBatch(_calls);
     }
 
     /**
      * @notice Executes a batch of calls directly.
      * @dev This function is intended for use when the smart account itself (i.e. address(this))
      * calls the contract. It checks that msg.sender is the contract itself.
-     * @param calls An array of Call structs containing destination, ETH value, and calldata.
+     * @param _calls An array of Call structs containing destination, ETH value, and calldata.
      */
-    function execute(Call[] calldata calls) external payable {
+    function execute(Call[] calldata _calls) external payable {
         require(msg.sender == address(this), InvalidAuthority(msg.sender));
-        _executeBatch(calls);
+        _executeBatch(_calls);
     }
 
     /**
      * @dev Internal function that handles batch execution and nonce incrementation.
-     * @param calls An array of Call structs.
+     * @param _calls An array of Call structs.
      */
-    function _executeBatch(Call[] calldata calls) internal {
+    function _executeBatch(Call[] calldata _calls) internal {
         uint256 currentNonce = nonce;
         nonce++;
 
-        for (uint256 i = 0; i < calls.length; i++) {
-            _executeCall(calls[i]);
+        for (uint256 i = 0; i < _calls.length; i++) {
+            _executeCall(_calls[i]);
         }
 
         emit BatchExecuted(currentNonce);
