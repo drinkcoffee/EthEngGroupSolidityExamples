@@ -7,9 +7,7 @@ import {SmartAccountDelegate} from "../src/SmartAccountDelegate.sol";
 import {FixedSupplyERC20, ERC20} from "../src/FixedSupplyERC20.sol";
 import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
 
-
 contract SmartAccountDelegateTest is Test {
-
     uint256 constant SUPPLY = 100;
     uint256 constant AMOUNT = 10;
 
@@ -25,10 +23,10 @@ contract SmartAccountDelegateTest is Test {
 
     // The contract that Alice will delegate execution to.
     SmartAccountDelegate public smartAccountTemplate;
- 
+
     // Expected code for Alice after delegation.
     bytes public expectedAliceCode;
- 
+
     function setUp() public {
         address aliceAddr;
         (aliceAddr, alicePrivateKey) = makeAddrAndKey("Alice");
@@ -38,7 +36,7 @@ contract SmartAccountDelegateTest is Test {
 
         // Deploy the delegation contract (Alice will delegate calls to this contract).
         smartAccountTemplate = new SmartAccountDelegate();
- 
+
         expectedAliceCode = abi.encodePacked(uint24(0xef0100), address(smartAccountTemplate));
 
         // Deploy an ERC-20 token contract where Alice owns the total supply.
@@ -47,11 +45,12 @@ contract SmartAccountDelegateTest is Test {
 
     function testSignThenAttachDelegation() public {
         // Alice signs a delegation allowing `smartAccountTemplate` to execute transactions on her behalf.
-        VmSafe.SignedDelegation memory signedDelegation = vm.signDelegation(address(smartAccountTemplate), alicePrivateKey);
+        VmSafe.SignedDelegation memory signedDelegation =
+            vm.signDelegation(address(smartAccountTemplate), alicePrivateKey);
 
         // Attach the signed delegation from Alice and broadcasts it.
         vm.attachDelegation(signedDelegation);
- 
+
         // Verify that Alice's account now behaves as a smart contract.
         bytes memory code = address(alice).code;
         assertEq(expectedAliceCode, code, "Incorrect delegation code");
@@ -61,11 +60,11 @@ contract SmartAccountDelegateTest is Test {
         testSignThenAttachDelegation();
 
         SmartAccountDelegate.Call[] memory calls = _createCalls();
- 
+
         // As Alice, execute the transaction via Alice's assigned contract.
         vm.prank(alice);
         SmartAccountDelegate(alice).execute(calls);
- 
+
         // Verify Bob successfully received AMOUNT tokens.
         assertEq(token.balanceOf(bob), AMOUNT);
     }
@@ -74,33 +73,31 @@ contract SmartAccountDelegateTest is Test {
         testSignThenAttachDelegation();
 
         SmartAccountDelegate.Call[] memory calls = _createCalls();
- 
+
         // As Bob, execute the transaction via Alice's assigned contract.
         vm.prank(bob);
         vm.expectRevert(abi.encodeWithSelector(SmartAccountDelegate.InvalidAuthority.selector, bob));
         SmartAccountDelegate(alice).execute(calls);
-     }
-
+    }
 
     function testSignAndAttachDelegation() public {
         // Alice signs and attaches the delegation in one step (eliminating the need for separate signing).
         vm.signAndAttachDelegation(address(smartAccountTemplate), alicePrivateKey);
- 
+
         // Verify that Alice's account now behaves as a smart contract.
         bytes memory code = address(alice).code;
         assertEq(expectedAliceCode, code, "Incorrect delegation code");
     }
 
-
     function testSignAndAttachDelegationWithCalls() public {
         testSignAndAttachDelegation();
 
         SmartAccountDelegate.Call[] memory calls = _createCalls();
-  
+
         // As Alice, execute the transaction via Alice's assigned contract.
         vm.prank(alice);
         SmartAccountDelegate(alice).execute(calls);
- 
+
         // Verify Bob successfully received AMOUNT tokens.
         vm.assertEq(token.balanceOf(bob), AMOUNT);
     }
@@ -109,7 +106,7 @@ contract SmartAccountDelegateTest is Test {
         testSignAndAttachDelegation();
 
         SmartAccountDelegate.Call[] memory calls = _createCalls();
-  
+
         // As Bob, execute the transaction via Alice's assigned contract.
         vm.prank(bob);
         vm.expectRevert(abi.encodeWithSelector(SmartAccountDelegate.InvalidAuthority.selector, bob));
@@ -141,7 +138,6 @@ contract SmartAccountDelegateTest is Test {
         SmartAccountDelegate(alice).execute(calls, signature);
     }
 
-
     function _createCalls() private view returns (SmartAccountDelegate.Call[] memory) {
         // Construct a single transaction call: Transfer tokens to Bob.
         SmartAccountDelegate.Call[] memory calls = new SmartAccountDelegate.Call[](1);
@@ -150,7 +146,11 @@ contract SmartAccountDelegateTest is Test {
         return calls;
     }
 
-    function _sign(uint256 _signerPrivateKey, uint256 _signersNonce, SmartAccountDelegate.Call[] memory _calls) internal pure returns (bytes memory) {
+    function _sign(uint256 _signerPrivateKey, uint256 _signersNonce, SmartAccountDelegate.Call[] memory _calls)
+        internal
+        pure
+        returns (bytes memory)
+    {
         // Encode calls.
         bytes memory encodedCalls;
         for (uint256 i = 0; i < _calls.length; i++) {
