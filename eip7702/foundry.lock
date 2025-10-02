@@ -1,0 +1,44 @@
+{
+  "../claim/lib/forge-std": {
+    "rev": "77041d2ce690e692d6e03cc812b57d1ddaa4d505"
+  },
+  "../claim/lib/openzeppelin-contracts": {
+    "rev": "e4f70216d759d8e6a64144a9e1f7bbeed78e7079"
+  },
+  "../claim/lib/openzeppelin-contracts-upgradeable": {
+    "rev": "60b305a8f3ff0c7688f02ac470417b6bbf1c4d27"
+  },
+  "../claim/lib/solidity-bytes-utils": {
+    "rev": "f4413cd6137b78403e3a1156bee6aceab46b46fa"
+  },
+  "../sol-test/202312/buy/lib/forge-std": {
+    "rev": "155d547c449afa8715f538d69454b83944117811"
+  },
+  "../sol-test/202312/buy/lib/openzeppelin-contracts": {
+    "rev": "01ef448981be9d20ca85f2faf6ebdf591ce409f3"
+  },
+  "../sol-test/202312/buy/lib/openzeppelin-contracts-upgradeable": {
+    "rev": "fbdb824a735891908d5588b28e0da5852d7ed7ba"
+  },
+  "../sol-test/202312/nftcontract/lib/forge-std": {
+    "rev": "2f112697506eab12d433a65fdc31a639548fe365"
+  },
+  "../sol-test/202312/nftcontract/lib/openzeppelin-contracts": {
+    "rev": "01ef448981be9d20ca85f2faf6ebdf591ce409f3"
+  },
+  "../sol-test/202312/nftcontract/lib/openzeppelin-contracts-upgradeable": {
+    "rev": "fbdb824a735891908d5588b28e0da5852d7ed7ba"
+  },
+  "lib/forge-std": {
+    "tag": {
+      "name": "v1.10.0",
+      "rev": "8bbcf6e3f8f62f419e5429a0bd89331c85c37824"
+    }
+  },
+  "lib/openzeppelin-contracts": {
+    "tag": {
+      "name": "v5.4.0",
+      "rev": "c64a1edb67b6e3f4a15cca8909c9482ad33a02b0"
+    }
+  }
+}
